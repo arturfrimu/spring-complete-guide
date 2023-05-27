@@ -49,4 +49,17 @@ class UserRepositoryTest {
         var savedUser = optionalSavedUser.get();
         assertEquals(user.getPhoneNumber(), savedUser.getPhoneNumber(), "Phone numbers should match after conversion");
     }
+
+    @Test
+    public void testFindUserByUsername() {
+        var user = RandomUser.builder().username("test").build().get();
+
+        userRepository.saveAndFlush(user);
+
+        var optionalSavedUser = userRepository.findByUsername(user.getUsername());
+        assertTrue(optionalSavedUser.isPresent(), "Saved user should exist");
+
+        var result = optionalSavedUser.get();
+        assertThat(result).usingRecursiveComparison().isEqualTo(user);
+    }
 }

@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static java.util.Objects.requireNonNull;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="USERS")
+@Table(name="users")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
@@ -23,4 +24,10 @@ public class User {
     private String password;
     @Convert(converter = PhoneNumberConverter.class)
     private String phoneNumber;
+
+    public User(String username, String password, String phoneNumber) {
+        this.username = requireNonNull(username);
+        this.password = requireNonNull(password);
+        this.phoneNumber = requireNonNull(phoneNumber);
+    }
 }

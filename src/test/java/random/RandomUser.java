@@ -4,15 +4,11 @@ import com.artur.springjpa.entity.User;
 import lombok.Builder;
 import lombok.Builder.Default;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 @Builder
 public class RandomUser implements Supplier<User> {
-    private final static Random random = new Random();
 
-    @Default
-    private final Long id = random.nextLong();
     @Default
     private final String username = "test";
     @Default
@@ -22,6 +18,6 @@ public class RandomUser implements Supplier<User> {
 
     @Override
     public User get() {
-        return new User(id, username, password, phoneNumber);
+        return new User(username, password, phoneNumber);
     }
 }
