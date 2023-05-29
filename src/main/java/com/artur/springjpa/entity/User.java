@@ -11,7 +11,7 @@ import static java.util.Objects.requireNonNull;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
@@ -20,14 +20,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String username;
-    private String password;
     @Convert(converter = PhoneNumberConverter.class)
     private String phoneNumber;
+    @Embedded
+    private UserPersonalInformation personalInformation;
 
-    public User(String username, String password, String phoneNumber) {
-        this.username = requireNonNull(username);
-        this.password = requireNonNull(password);
+    public User(String phoneNumber, UserPersonalInformation personalInformation) {
+        this.personalInformation = requireNonNull(personalInformation);
         this.phoneNumber = requireNonNull(phoneNumber);
     }
 }

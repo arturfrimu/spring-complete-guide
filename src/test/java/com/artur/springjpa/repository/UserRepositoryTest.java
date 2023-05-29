@@ -51,12 +51,38 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByUsername() {
-        var user = RandomUser.builder().username("test").build().get();
+    public void testFindUserByPersonalInformation() {
+        var user = RandomUser.builder().build().get();
 
         userRepository.saveAndFlush(user);
 
-        var optionalSavedUser = userRepository.findByUsername(user.getUsername());
+        var optionalSavedUser = userRepository.findByPersonalInformation(user.getPersonalInformation());
+        assertTrue(optionalSavedUser.isPresent(), "Saved user should exist");
+
+        var result = optionalSavedUser.get();
+        assertThat(result).usingRecursiveComparison().isEqualTo(user);
+    }
+
+    @Test
+    public void testFindUserByUsername() {
+        var user = RandomUser.builder().build().get();
+
+        userRepository.saveAndFlush(user);
+
+        var optionalSavedUser = userRepository.findByPersonalInformationUsername(user.getPersonalInformation().getUsername());
+        assertTrue(optionalSavedUser.isPresent(), "Saved user should exist");
+
+        var result = optionalSavedUser.get();
+        assertThat(result).usingRecursiveComparison().isEqualTo(user);
+    }
+
+    @Test
+    public void testFindUserByPassword() {
+        var user = RandomUser.builder().build().get();
+
+        userRepository.saveAndFlush(user);
+
+        var optionalSavedUser = userRepository.findByPersonalInformationPassword(user.getPersonalInformation().getPassword());
         assertTrue(optionalSavedUser.isPresent(), "Saved user should exist");
 
         var result = optionalSavedUser.get();
