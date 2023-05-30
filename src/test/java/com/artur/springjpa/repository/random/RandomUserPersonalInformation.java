@@ -1,4 +1,4 @@
-package random;
+package com.artur.springjpa.repository.random;
 
 import com.artur.springjpa.entity.UserPersonalInformation;
 import lombok.Builder;
