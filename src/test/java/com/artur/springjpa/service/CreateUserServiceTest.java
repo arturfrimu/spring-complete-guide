@@ -2,6 +2,7 @@ package com.artur.springjpa.service;
 
 import com.artur.springjpa.entity.User;
 import com.artur.springjpa.entity.UserPersonalInformation;
+import com.artur.springjpa.mapper.UserMapper;
 import com.artur.springjpa.repository.UserRepository;
 import com.artur.springjpa.service.random.RandomCreateUserCommand;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,15 @@ import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserServiceTest {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserMapper userMapper;
 
     @InjectMocks
     private CreateUserService createUserService;
@@ -27,8 +31,13 @@ class CreateUserServiceTest {
     @Test
     public void testCreateUserValid() {
         var command = RandomCreateUserCommand.builder().build().get();
+        var actual = new User(command.phoneNumber(), new UserPersonalInformation(command.username(), command.password()));
+
+        when(userMapper.toUser(command)).thenReturn(actual);
+
         createUserService.create(command);
-        verify(userRepository).save(new User(command.phoneNumber(), new UserPersonalInformation(command.username(), command.password())));
+
+        verify(userRepository).save(actual);
     }
 
     @Test

@@ -14,11 +14,12 @@ import static java.util.Objects.isNull;
 public class CreateUserService implements CreateUserUseCase {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public void create(CreateUserCommand command) {
         validate(command);
-        var newUser = UserMapper.INSTANCE.toUser(command);
+        var newUser = userMapper.toUser(command);
         userRepository.save(newUser);
     }
 
