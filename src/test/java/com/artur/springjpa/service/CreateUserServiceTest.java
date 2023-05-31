@@ -3,7 +3,6 @@ package com.artur.springjpa.service;
 import com.artur.springjpa.entity.User;
 import com.artur.springjpa.entity.UserPersonalInformation;
 import com.artur.springjpa.repository.UserRepository;
-import com.artur.springjpa.service.command.CreateUserCommand;
 import com.artur.springjpa.service.random.RandomCreateUserCommand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static java.lang.String.format;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 
@@ -32,19 +33,23 @@ class CreateUserServiceTest {
 
     @Test
     public void testCreateUserInvalidPhoneNumber() {
-        var command = new CreateUserCommand(null, "testUsername", "testPassword");
-        assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        var command = RandomCreateUserCommand.builder().phoneNumber(null).build().get();
+        var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        assertEquals(format("Phone number can not be blank %s", command.phoneNumber()), exception.getMessage());
     }
 
     @Test
     public void testCreateUserInvalidUsername() {
-        var command = new CreateUserCommand("1234567890", null, "testPassword");
-        assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        var command = RandomCreateUserCommand.builder().username(null).build().get();
+        var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        assertEquals(format("Username can not be blank %s", command.username()), exception.getMessage());
     }
+
 
     @Test
     public void testCreateUserInvalidPassword() {
-        var command = new CreateUserCommand("1234567890", "testUsername", null);
-        assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        var command = RandomCreateUserCommand.builder().password(null).build().get();
+        var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
+        assertEquals(format("Password can not be blank %s", command.password()), exception.getMessage());
     }
 }
