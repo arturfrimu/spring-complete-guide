@@ -1,7 +1,6 @@
 package com.artur.springjpa.service;
 
-import com.artur.springjpa.entity.User;
-import com.artur.springjpa.entity.UserPersonalInformation;
+import com.artur.springjpa.mapper.UserMapper;
 import com.artur.springjpa.repository.UserRepository;
 import com.artur.springjpa.service.command.CreateUserCommand;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class CreateUserService implements CreateUserUseCase {
     @Override
     public void create(CreateUserCommand command) {
         validate(command);
-        var newUser = toUser(command);
+        var newUser = UserMapper.INSTANCE.toUser(command);
         userRepository.save(newUser);
     }
 
@@ -35,9 +34,5 @@ public class CreateUserService implements CreateUserUseCase {
         if (isNull(command.password()) || command.password().isBlank()) {
             throw new IllegalArgumentException(format("Password can not be blank %s", command.password()));
         }
-    }
-
-    private static User toUser(CreateUserCommand command) {
-        return new User(command.phoneNumber(), new UserPersonalInformation(command.username(), command.password()));
     }
 }
