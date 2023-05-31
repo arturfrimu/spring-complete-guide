@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface CreateUserRequestCommandMapper {
 
-    CreateUserCommand requestToCommand(CreateUserRequest request);
+    CreateUserCommand toCommand(CreateUserRequest request);
 }
