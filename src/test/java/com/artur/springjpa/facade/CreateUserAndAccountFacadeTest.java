@@ -3,7 +3,6 @@ package com.artur.springjpa.facade;
 import annotation.ServiceTest;
 import com.artur.springjpa.repository.AccountRepository;
 import com.artur.springjpa.repository.UserRepository;
-import com.artur.springjpa.service.CreateUserAndAccountFacade;
 import com.artur.springjpa.service.command.CreateAccountCommand;
 import com.artur.springjpa.service.command.CreateUserCommand;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ class CreateUserAndAccountFacadeTest {
     @Autowired
     AccountRepository accountRepository;
     @Autowired
-    CreateUserAndAccountFacade createUserAndAccountFacade;
+    UserAndAccountFacade userAndAccountFacade;
 
     @BeforeEach
     void cleanUp() {
@@ -34,7 +33,7 @@ class CreateUserAndAccountFacadeTest {
         var createUserCommand = new CreateUserCommand("1234", "username", "password");
         var createAccountCommand = new CreateAccountCommand("account");
 
-        createUserAndAccountFacade.createUserAndAccountFacade(
+        userAndAccountFacade.createUserAndAccountFacade(
                 createUserCommand,
                 createAccountCommand
         );
@@ -49,7 +48,7 @@ class CreateUserAndAccountFacadeTest {
         var createAccountCommand = new CreateAccountCommand(null);
 
         assertThrows(NullPointerException.class, () -> {
-            createUserAndAccountFacade.createUserAndAccountFacade(
+            userAndAccountFacade.createUserAndAccountFacade(
                     createUserCommand,
                     createAccountCommand
             );
