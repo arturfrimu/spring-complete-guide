@@ -1,6 +1,8 @@
 package com.artur.springjpa.facade;
 
 import com.artur.springjpa.annotation.Facade;
+import com.artur.springjpa.service.ChangeAccountNameService;
+import com.artur.springjpa.service.ChangeUserUsernameService;
 import com.artur.springjpa.service.CreateAccountUseCase;
 import com.artur.springjpa.service.CreateUserUseCase;
 import com.artur.springjpa.service.command.CreateAccountCommand;
@@ -22,12 +24,10 @@ public class UserAndAccountFacade {
      * part of the process fails (either user creation or account creation), the entire transaction
      * will be rolled back, ensuring data consistency.</p>
      *
-     * @param createUserCommand Command object containing information required for creating a user.
+     * @param createUserCommand    Command object containing information required for creating a user.
      * @param createAccountCommand Command object containing information required for creating an account.
-     *
      * @throws NullPointerException if [specific condition related to user creation]
      * @throws NullPointerException if [specific condition related to account creation]
-     *
      * @see CreateUserUseCase#create(CreateUserCommand)
      * @see CreateAccountUseCase#create(CreateAccountCommand)
      */
@@ -38,5 +38,14 @@ public class UserAndAccountFacade {
     ) {
         createUserUseCase.create(createUserCommand);
         createAccountUseCase.create(createAccountCommand);
+    }
+
+    private final ChangeUserUsernameService changeUserUsernameService;
+    private final ChangeAccountNameService changeAccountNameService;
+
+    @Transactional
+    public void changeUsernameAndAccountName(Long userId, String username, Long accountId, String accountName) {
+        changeUserUsernameService.change(userId, username);
+        changeAccountNameService.change(accountId, accountName);
     }
 }

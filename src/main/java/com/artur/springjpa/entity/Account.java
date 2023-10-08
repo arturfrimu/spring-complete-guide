@@ -28,4 +28,9 @@ public class Account {
     public Account(String accountName) {
         this.accountName = Objects.requireNonNull(accountName, "Account name can't be null");
     }
+
+    public Account(long id, String accountName) {
+        this.id = Objects.requireNonNull(id, "Id can't be null");
+        this.accountName = Objects.requireNonNull(accountName, "Account name can't be null");
+    }
 }
