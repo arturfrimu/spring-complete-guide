@@ -1,9 +1,7 @@
 package com.artur.springjpa.entity;
 
 import com.artur.springjpa.converter.PhoneNumberConverter;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,9 +9,10 @@ import static java.util.Objects.requireNonNull;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
+@Getter
+@Setter
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
 public class User {
 

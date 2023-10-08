@@ -16,7 +16,7 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void testSaveUser() {
+    void testSaveUser() {
         var user = RandomUser.builder().build().get();
 
         var result = userRepository.saveAndFlush(user);
@@ -25,7 +25,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByConvertedPhoneNumber() {
+    void testFindUserByConvertedPhoneNumber() {
         var user = RandomUser.builder().phoneNumber("010-12-34-56").build().get();
 
         userRepository.saveAndFlush(user);
@@ -38,7 +38,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByNonConvertedPhoneNumber() {
+    void testFindUserByNonConvertedPhoneNumber() {
         var user = RandomUser.builder().phoneNumber("010-12-34-56").build().get();
 
         userRepository.saveAndFlush(user);
@@ -51,7 +51,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByPersonalInformation() {
+    void testFindUserByPersonalInformation() {
         var user = RandomUser.builder().build().get();
 
         userRepository.saveAndFlush(user);
@@ -64,7 +64,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByUsername() {
+    void testFindUserByUsername() {
         var user = RandomUser.builder().build().get();
 
         userRepository.saveAndFlush(user);
@@ -77,7 +77,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    public void testFindUserByPassword() {
+    void testFindUserByPassword() {
         var user = RandomUser.builder().build().get();
 
         userRepository.saveAndFlush(user);
