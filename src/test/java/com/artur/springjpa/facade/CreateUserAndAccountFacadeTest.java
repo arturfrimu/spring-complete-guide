@@ -12,6 +12,7 @@ import com.artur.springjpa.service.command.CreateUserCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.IllegalTransactionStateException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,21 +35,25 @@ class CreateUserAndAccountFacadeTest {
 
     @Test
     void createUserAndAccountPropagationRequired() {
-        var createUserCommand = new CreateUserCommand("1234", "username", "password");
-        var createAccountCommand = new CreateAccountCommand("account");
+        String username = "username";
+        String accountName = "account";
+
+        var createUserCommand = new CreateUserCommand("1234", username, "password");
+        var createAccountCommand = new CreateAccountCommand(accountName);
 
         userAndAccountFacade.createUserAndAccountFacade(
                 createUserCommand,
                 createAccountCommand
         );
 
-        assertThat(userRepository.findAll()).hasSize(1);
-        assertThat(accountRepository.findAll()).hasSize(1);
+        assertThat(userRepository.findByPersonalInformationUsername(username)).isNotEmpty();
+        assertThat(accountRepository.findByAccountName(accountName)).isNotEmpty();
     }
 
     @Test
     void createUserAndAccountPropagationRequiredFailed() {
-        var createUserCommand = new CreateUserCommand("1234", "username", "password");
+        String username = "username";
+        var createUserCommand = new CreateUserCommand("1234", username, "password");
         var createAccountCommand = new CreateAccountCommand(null);
 
         assertThrows(NullPointerException.class, () -> {
@@ -58,35 +63,74 @@ class CreateUserAndAccountFacadeTest {
             );
         }, "Account name can't be null");
 
-        assertThat(userRepository.findAll()).isEmpty();
+        assertThat(userRepository.findByPersonalInformationUsername(username)).isEmpty();
         assertThat(accountRepository.findAll()).isEmpty();
     }
 
     @Test
-    void changeUsernameAndAccountName() {
-        userRepository.save(new User(1L, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
-        accountRepository.save(new Account(1L, "oldAccountName"));
+    void changeUsernameAndAccountNamePropagationRequiredNew() {
+        var userId = 1L;
+        long accountId = 1L;
+
+        userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.save(new Account(accountId, "oldAccountName"));
 
         userAndAccountFacade.changeUsernameAndAccountName(
-                1L, "newUsername", 1L, "newAccountName"
+                new UpdateUsernameCommand(userId, "newUsername"),
+                new UpdateAccoundNameCommand(accountId, "newAccountName")
         );
 
-        assertThat(userRepository.findById(1L).get().getPersonalInformation().getUsername()).isEqualTo("newUsername");
-        assertThat(accountRepository.findById(1L).get().getAccountName()).isEqualTo("newAccountName");
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("newUsername");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("newAccountName");
     }
 
     @Test
-    void changeUsernameAndAccountNameIsNull() {
-        userRepository.save(new User(1L, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
-        accountRepository.save(new Account(1L, "oldAccountName"));
+    void changeUsernameAndAccountNameIsNullPropagationRequiredNew() {
+        var userId = 1L;
+        var accountId = 1L;
+        var wrongAccountId = -1L;
+
+        userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.save(new Account(accountId, "oldAccountName"));
 
         assertThrows(ResourceNotFoundException.class, () -> {
             userAndAccountFacade.changeUsernameAndAccountName(
-                    1L, "newUsername", 2L, null
+                    new UpdateUsernameCommand(userId, "newUsername"),
+                    new UpdateAccoundNameCommand(wrongAccountId, null)
             );
-        }, "Account not found with id: %s".formatted(2L));
+        }, "Account not found with id: %s".formatted(wrongAccountId));
 
-        assertThat(userRepository.findById(1L).get().getPersonalInformation().getUsername()).isEqualTo("newUsername");
-        assertThat(accountRepository.findById(1L).get().getAccountName()).isEqualTo("oldAccountName");
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("newUsername");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("oldAccountName");
+    }
+
+    @Test
+    void upperCaseUsernameAndAccountNamePropagationMandatory() {
+        var userId = 1L;
+        var accountId = 1L;
+
+        userRepository.saveAndFlush(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.saveAndFlush(new Account(accountId, "oldAccountName"));
+
+        userAndAccountFacade.makeUpperCaseUsernameAndAccountName(userId, accountId);
+
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername".toUpperCase());
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("oldAccountName".toUpperCase());
+    }
+
+    @Test
+    void lowerCaseUsernameAndAccountNamePropagationMandatoryFail() {
+        var userId = 1L;
+        var accountId = 1L;
+
+        userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.save(new Account(accountId, "oldAccountName"));
+
+        assertThrows(IllegalTransactionStateException.class, () -> {
+            userAndAccountFacade.makeLowerCaseUsernameAndAccountName(userId, accountId);
+        }, "No existing transaction found for transaction marked with propagation 'mandatory'");
+
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("oldAccountName");
     }
 }

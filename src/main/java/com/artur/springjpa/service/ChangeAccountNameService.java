@@ -5,10 +5,7 @@ import com.artur.springjpa.exception.ResourceNotFoundException;
 import com.artur.springjpa.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +20,23 @@ public class ChangeAccountNameService implements ChangeAccountNameUseCase {
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: %s".formatted(accountId)));
 
         account.setAccountName(accountName);
+    }
+
+    @Override
+    @Transactional
+    public void makeUpperCaseAccountName(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: %s".formatted(accountId)));
+
+        account.setAccountName(account.getAccountName().toUpperCase());
+    }
+
+    @Override
+    @Transactional
+    public void makeLowerCaseAccountName(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: %s".formatted(accountId)));
+
+        account.setAccountName(account.getAccountName().toLowerCase());
     }
 }

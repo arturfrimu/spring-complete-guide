@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
 
 @Service
@@ -49,5 +50,25 @@ public class ChangeUserUsernameService implements ChangeUserUsernameUseCase {
 
         UserPersonalInformation personalInformation = user.getPersonalInformation();
         personalInformation.setUsername(username);
+    }
+
+    @Override
+    @Transactional(propagation = MANDATORY)
+    public void makeUpperCaseUsername(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: %s".formatted(userId)));
+
+        UserPersonalInformation personalInformation = user.getPersonalInformation();
+        personalInformation.setUsername(personalInformation.getUsername().toUpperCase());
+    }
+
+    @Override
+    @Transactional(propagation = MANDATORY)
+    public void makeLowerCaseUsername(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: %s".formatted(userId)));
+
+        UserPersonalInformation personalInformation = user.getPersonalInformation();
+        personalInformation.setUsername(personalInformation.getUsername().toLowerCase());
     }
 }

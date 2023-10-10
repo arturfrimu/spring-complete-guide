@@ -44,8 +44,22 @@ public class UserAndAccountFacade {
     private final ChangeAccountNameService changeAccountNameService;
 
     @Transactional
-    public void changeUsernameAndAccountName(Long userId, String username, Long accountId, String accountName) {
-        changeUserUsernameService.change(userId, username);
-        changeAccountNameService.change(accountId, accountName);
+    public void changeUsernameAndAccountName(
+            UpdateUsernameCommand updateUsernameCommand,
+            UpdateAccoundNameCommand updateAccoundNameCommand
+    ) {
+        changeUserUsernameService.change(updateUsernameCommand.userId(), updateUsernameCommand.username());
+        changeAccountNameService.change(updateAccoundNameCommand.accountId(), updateAccoundNameCommand.accountName());
+    }
+
+    @Transactional
+    public void makeUpperCaseUsernameAndAccountName(final Long userId, final Long accountId) {
+        changeUserUsernameService.makeUpperCaseUsername(userId);
+        changeAccountNameService.makeUpperCaseAccountName(accountId);
+    }
+
+    public void makeLowerCaseUsernameAndAccountName(final Long userId, final Long accountId) {
+        changeUserUsernameService.makeLowerCaseUsername(userId);
+        changeAccountNameService.makeLowerCaseAccountName(accountId);
     }
 }
