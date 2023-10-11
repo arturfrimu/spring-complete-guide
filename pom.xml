@@ -10,11 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.artur</groupId>
-    <artifactId>spring-jpa</artifactId>
+    <groupId>com.arturfrimu.spring</groupId>
+    <artifactId>spring-complete-guide</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-jpa</name>
-    <description>spring-jpa</description>
+    <name>spring-complete-guide</name>
 
     <properties>
         <java.version>17</java.version>
@@ -49,7 +48,6 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.5.3.Final</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
