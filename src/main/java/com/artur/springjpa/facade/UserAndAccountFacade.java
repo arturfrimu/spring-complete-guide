@@ -7,6 +7,8 @@ import com.artur.springjpa.service.CreateAccountUseCase;
 import com.artur.springjpa.service.CreateUserUseCase;
 import com.artur.springjpa.service.command.CreateAccountCommand;
 import com.artur.springjpa.service.command.CreateUserCommand;
+import com.artur.springjpa.service.command.UpdateAccoundNameCommand;
+import com.artur.springjpa.service.command.UpdateUsernameCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

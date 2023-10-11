@@ -9,6 +9,8 @@ import com.artur.springjpa.repository.AccountRepository;
 import com.artur.springjpa.repository.UserRepository;
 import com.artur.springjpa.service.command.CreateAccountCommand;
 import com.artur.springjpa.service.command.CreateUserCommand;
+import com.artur.springjpa.service.command.UpdateAccoundNameCommand;
+import com.artur.springjpa.service.command.UpdateUsernameCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.artur.springjpa.facade;
+package com.artur.springjpa.service.command;
 
 public record UpdateAccoundNameCommand(Long accountId, String accountName) {
 }
