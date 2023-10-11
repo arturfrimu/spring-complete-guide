@@ -14,4 +14,7 @@ public interface ChangeUserUsernameUseCase {
 
     @Transactional(propagation = MANDATORY)
     void makeLowerCaseUsername(Long userId);
+
+    @Transactional(propagation = MANDATORY)
+    void makeFirstLetterUpperCaseUsername(Long userId);
 }

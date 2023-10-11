@@ -133,4 +133,49 @@ class CreateUserAndAccountFacadeTest {
         assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername");
         assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("oldAccountName");
     }
+
+    /**
+     * This method capitalizes the first letter of both the user's username and the account name.
+     * The method operates within a transactional context defined by the SUPPORTS propagation behavior.
+     *
+     * In a technical perspective, the SUPPORTS propagation mode in Spring's transaction management
+     * means the following:
+     * - If there's an active transaction already present, the method will run within that transaction context.
+     * - If there's no active transaction, the method will execute without a transaction. It won't start
+     *   a new one but will rather continue executing in a non-transactional mode.
+     *
+     * Therefore, in this case, if an outer transactional method calls this method, the changes to the
+     * user's username and account name will be part of the outer transaction. If the outer transaction
+     * rolls back, so will the changes made by this method.
+     * Conversely, if this method is called outside of any transaction, the database changes are executed
+     * immediately, and they won't be part of any transaction, which gives an autosave-like behavior.
+     */
+
+    @Test
+    void upperFirstLetterCaseUsernameAndAccountNamePropagationSupports() {
+        var userId = 1L;
+        var accountId = 1L;
+
+        userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.save(new Account(accountId, "oldAccountName"));
+
+        userAndAccountFacade.makeFirstLetterUpperCaseUsernameAndAccountNameSuccess(userId, accountId);
+
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("OldUsername");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");
+    }
+
+    @Test
+    void upperFirstLetterCaseUsernameAndAccountNamePropagationSupportsFail() {
+        var userId = 1L;
+        var accountId = 1L;
+
+        userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
+        accountRepository.save(new Account(accountId, "oldAccountName"));
+
+        userAndAccountFacade.makeFirstLetterUpperCaseUsernameAndAccountNameFail(userId, accountId);
+
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");
+    }
 }

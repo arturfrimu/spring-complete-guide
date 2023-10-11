@@ -11,4 +11,7 @@ public interface ChangeAccountNameUseCase {
 
     @Transactional
     void makeLowerCaseAccountName(Long accountId);
+
+    @Transactional
+    void makeFirstLetterLowerCaseAccountName(Long accountId);
 }

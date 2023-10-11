@@ -62,4 +62,15 @@ public class UserAndAccountFacade {
         changeUserUsernameService.makeLowerCaseUsername(userId);
         changeAccountNameService.makeLowerCaseAccountName(accountId);
     }
+
+    @Transactional
+    public void makeFirstLetterUpperCaseUsernameAndAccountNameSuccess(final Long userId, final Long accountId) {
+        changeUserUsernameService.makeFirstLetterUpperCaseUsername(userId);
+        changeAccountNameService.makeFirstLetterLowerCaseAccountName(accountId);
+    }
+
+    public void makeFirstLetterUpperCaseUsernameAndAccountNameFail(final Long userId, final Long accountId) {
+        changeUserUsernameService.makeFirstLetterUpperCaseUsername(userId);
+        changeAccountNameService.makeFirstLetterLowerCaseAccountName(accountId);
+    }
 }

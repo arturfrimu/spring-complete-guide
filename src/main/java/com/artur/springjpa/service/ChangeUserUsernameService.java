@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.transaction.annotation.Propagation.MANDATORY;
-import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
+import static org.springframework.transaction.annotation.Propagation.*;
 
 @Service
 @RequiredArgsConstructor
@@ -70,5 +69,23 @@ public class ChangeUserUsernameService implements ChangeUserUsernameUseCase {
 
         UserPersonalInformation personalInformation = user.getPersonalInformation();
         personalInformation.setUsername(personalInformation.getUsername().toLowerCase());
+    }
+
+    @Override
+    @Transactional(propagation = SUPPORTS)
+    public void makeFirstLetterUpperCaseUsername(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: %s".formatted(userId)));
+
+        UserPersonalInformation personalInformation = user.getPersonalInformation();
+        String capitalizeFirstLetter = capitalizeFirstLetter(personalInformation.getUsername());
+        personalInformation.setUsername(capitalizeFirstLetter);
+    }
+
+    private static String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 }

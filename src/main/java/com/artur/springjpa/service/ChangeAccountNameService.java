@@ -39,4 +39,21 @@ public class ChangeAccountNameService implements ChangeAccountNameUseCase {
 
         account.setAccountName(account.getAccountName().toLowerCase());
     }
+
+    @Override
+    @Transactional
+    public void makeFirstLetterLowerCaseAccountName(Long accountId) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: %s".formatted(accountId)));
+
+        String capitalizeFirstLetter = capitalizeFirstLetter(account.getAccountName());
+        account.setAccountName(capitalizeFirstLetter);
+    }
+
+    private static String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
 }
