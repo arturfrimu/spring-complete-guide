@@ -16,4 +16,9 @@ class ScopeFacadeTest {
     void equalSingletons() {
         assertTrue(scopeFacade.equalSingletons());
     }
+
+    @Test
+    void equalPrototypes() {
+        assertFalse(scopeFacade.equalPrototypes());
+    }
 }
