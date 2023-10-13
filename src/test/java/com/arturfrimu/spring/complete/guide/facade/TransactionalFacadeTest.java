@@ -21,14 +21,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ServiceTest
-class CreateUserAndAccountFacadeTest {
+class TransactionalFacadeTest {
 
     @Autowired
     UserRepository userRepository;
     @Autowired
     AccountRepository accountRepository;
     @Autowired
-    UserAndAccountFacade userAndAccountFacade;
+    TransactionalFacade transactionalFacade;
 
     @BeforeEach
     void cleanUp() {
@@ -44,7 +44,7 @@ class CreateUserAndAccountFacadeTest {
         var createUserCommand = new CreateUserCommand("1234", username, "password");
         var createAccountCommand = new CreateAccountCommand(accountName);
 
-        userAndAccountFacade.createUserAndAccountFacade(
+        transactionalFacade.createUserAndAccountFacade(
                 createUserCommand,
                 createAccountCommand
         );
@@ -60,7 +60,7 @@ class CreateUserAndAccountFacadeTest {
         var createAccountCommand = new CreateAccountCommand(null);
 
         assertThrows(NullPointerException.class, () -> {
-            userAndAccountFacade.createUserAndAccountFacade(
+            transactionalFacade.createUserAndAccountFacade(
                     createUserCommand,
                     createAccountCommand
             );
@@ -78,7 +78,7 @@ class CreateUserAndAccountFacadeTest {
         userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
         accountRepository.save(new Account(accountId, "oldAccountName"));
 
-        userAndAccountFacade.changeUsernameAndAccountName(
+        transactionalFacade.changeUsernameAndAccountName(
                 new UpdateUsernameCommand(userId, "newUsername"),
                 new UpdateAccoundNameCommand(accountId, "newAccountName")
         );
@@ -97,7 +97,7 @@ class CreateUserAndAccountFacadeTest {
         accountRepository.save(new Account(accountId, "oldAccountName"));
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            userAndAccountFacade.changeUsernameAndAccountName(
+            transactionalFacade.changeUsernameAndAccountName(
                     new UpdateUsernameCommand(userId, "newUsername"),
                     new UpdateAccoundNameCommand(wrongAccountId, null)
             );
@@ -115,7 +115,7 @@ class CreateUserAndAccountFacadeTest {
         userRepository.saveAndFlush(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
         accountRepository.saveAndFlush(new Account(accountId, "oldAccountName"));
 
-        userAndAccountFacade.makeUpperCaseUsernameAndAccountName(userId, accountId);
+        transactionalFacade.makeUpperCaseUsernameAndAccountName(userId, accountId);
 
         assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername".toUpperCase());
         assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("oldAccountName".toUpperCase());
@@ -130,7 +130,7 @@ class CreateUserAndAccountFacadeTest {
         accountRepository.save(new Account(accountId, "oldAccountName"));
 
         assertThrows(IllegalTransactionStateException.class, () -> {
-            userAndAccountFacade.makeLowerCaseUsernameAndAccountName(userId, accountId);
+            transactionalFacade.makeLowerCaseUsernameAndAccountName(userId, accountId);
         }, "No existing transaction found for transaction marked with propagation 'mandatory'");
 
         assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername");
@@ -162,12 +162,16 @@ class CreateUserAndAccountFacadeTest {
         userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
         accountRepository.save(new Account(accountId, "oldAccountName"));
 
-        userAndAccountFacade.makeFirstLetterUpperCaseUsernameAndAccountNameSuccess(userId, accountId);
+        transactionalFacade.makeFirstLetterUpperCaseUsernameAndAccountNameSuccess(userId, accountId);
 
-        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("OldUsername");
-        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");                     // YES TRANSACTION !! YES AUTOCOMMIT !! YES UPDATE !!
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("OldUsername"); // YES TRANSACTION !! YES AUTOCOMMIT !! YES UPDATE !!
     }
 
+
+    /**
+     * To fix add @Transactional on method userAndAccountFacade.makeFirstLetterUpperCaseUsernameAndAccountNameFail
+     */
     @Test
     void upperFirstLetterCaseUsernameAndAccountNamePropagationSupportsFail() {
         var userId = 1L;
@@ -176,9 +180,9 @@ class CreateUserAndAccountFacadeTest {
         userRepository.save(new User(userId, "12345", new UserPersonalInformation("oldUsername", "oldPassword")));
         accountRepository.save(new Account(accountId, "oldAccountName"));
 
-        userAndAccountFacade.makeFirstLetterUpperCaseUsernameAndAccountNameFail(userId, accountId);
+        transactionalFacade.makeFirstLetterUpperCaseUsernameAndAccountNameFail(userId, accountId);
 
-        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("oldUsername");
-        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");
+        assertThat(accountRepository.findById(accountId).get().getAccountName()).isEqualTo("OldAccountName");                     // YES TRANSACTION !! YES AUTOCOMMIT !! YES UPDATE !!
+        assertThat(userRepository.findById(userId).get().getPersonalInformation().getUsername()).isEqualTo("OldUsername"); // NO TRANSACTION !! NO AUTOCOMMIT !! NO UPDATE !!
     }
 }
