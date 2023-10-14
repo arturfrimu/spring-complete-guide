@@ -28,7 +28,7 @@ public class ScopeFacade {
     }
 
     boolean equalPrototypes() {
-        return prototypeService1.equals(prototypeService2);
+        return prototypeService1.equals(prototypeService2) && prototypeService1.getId().equals(prototypeService2.getId());
     }
 
     public void add() {
