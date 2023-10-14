@@ -31,11 +31,11 @@ public class ScopeFacade {
         return prototypeService1.equals(prototypeService2) && prototypeService1.getId().equals(prototypeService2.getId());
     }
 
-    public void add() {
+    public void incrementRequest() {
         requestScope.add(requestService.getId());
     }
 
-    public int size() {
+    public int requestBeanCount() {
         return requestScope.size();
     }
 }

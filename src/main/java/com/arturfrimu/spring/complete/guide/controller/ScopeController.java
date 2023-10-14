@@ -13,13 +13,13 @@ public class ScopeController {
 
     private final ScopeFacade scopeFacade;
 
-    @GetMapping("/makeRequest")
-    public void makeRequest() {
-        scopeFacade.add();
+    @GetMapping("/request/makeRequest")
+    public void incrementRequest() {
+        scopeFacade.incrementRequest();
     }
 
-    @GetMapping("/count")
-    public int isTheSameRequest() {
-        return scopeFacade.size();
+    @GetMapping("/request/count")
+    public int requestBeanCount() {
+        return scopeFacade.requestBeanCount();
     }
 }

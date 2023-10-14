@@ -33,14 +33,14 @@ class ScopeFacadeTest {
 
     @Test
     void countRequestScopes() throws Exception {
-        mockMvc.perform(get("/scopes/makeRequest")).andExpect(status().isOk()).andReturn();
-        mockMvc.perform(get("/scopes/makeRequest")).andExpect(status().isOk()).andReturn();
+        mockMvc.perform(get("/scopes/request/makeRequest")).andExpect(status().isOk());
+        mockMvc.perform(get("/scopes/request/makeRequest")).andExpect(status().isOk());
 
-        var result = mockMvc.perform(get("/scopes/count")).andExpect(status().isOk()).andReturn();
+        var response = mockMvc.perform(get("/scopes/request/count")).andExpect(status().isOk()).andReturn();
 
-        int count = Integer.parseInt(result.getResponse().getContentAsString());
+        int count = Integer.parseInt(response.getResponse().getContentAsString());
 
-        assertThat(result).isNotNull();
+        assertThat(response).isNotNull();
         assertEquals(2, count);
     }
 }
