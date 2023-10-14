@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
+
 @Slf4j
 @Service
-@Scope("singleton")
+@Scope(value = "request", proxyMode = TARGET_CLASS)
 @EqualsAndHashCode
 @Getter
-public class SingletonService {
+public class RequestService {
 
     private final UUID id = UUID.randomUUID();
 }
