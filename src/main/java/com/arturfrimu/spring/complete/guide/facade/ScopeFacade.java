@@ -24,7 +24,7 @@ public class ScopeFacade {
     private final RequestService requestService;
 
     boolean equalSingletons() {
-        return singletonService1.equals(singletonService2);
+        return singletonService1.equals(singletonService2) && singletonService1.getId().equals(singletonService2.getId());
     }
 
     boolean equalPrototypes() {
