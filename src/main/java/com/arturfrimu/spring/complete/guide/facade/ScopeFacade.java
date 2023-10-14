@@ -3,6 +3,7 @@ package com.arturfrimu.spring.complete.guide.facade;
 import com.arturfrimu.spring.complete.guide.annotation.Facade;
 import com.arturfrimu.spring.complete.guide.service.PrototypeService;
 import com.arturfrimu.spring.complete.guide.service.RequestService;
+import com.arturfrimu.spring.complete.guide.service.SessionService;
 import com.arturfrimu.spring.complete.guide.service.SingletonService;
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class ScopeFacade {
 
     private final Set<UUID> requestScope = new HashSet<>();
+    private final Set<UUID> sessionScope = new HashSet<>();
 
     private final SingletonService singletonService1;
     private final SingletonService singletonService2;
@@ -22,6 +24,8 @@ public class ScopeFacade {
     private final PrototypeService prototypeService2;
 
     private final RequestService requestService;
+
+    private final SessionService sessionService;
 
     boolean equalSingletons() {
         return singletonService1.equals(singletonService2) && singletonService1.getId().equals(singletonService2.getId());
@@ -37,5 +41,13 @@ public class ScopeFacade {
 
     public int requestBeanCount() {
         return requestScope.size();
+    }
+
+    public void incrementSession() {
+        sessionScope.add(sessionService.getId());
+    }
+
+    public int sessionBeanCount() {
+        return sessionScope.size();
     }
 }

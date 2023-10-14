@@ -22,4 +22,14 @@ public class ScopeController {
     public int requestBeanCount() {
         return scopeFacade.requestBeanCount();
     }
+
+    @GetMapping("/session/makeRequest")
+    public void incrementSession() {
+        scopeFacade.incrementSession();
+    }
+
+    @GetMapping("/session/count")
+    public int sessionBeanCount() {
+        return scopeFacade.sessionBeanCount();
+    }
 }
