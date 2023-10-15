@@ -1,6 +1,6 @@
 package com.arturfrimu.spring.complete.guide.listener;
 
-import com.arturfrimu.spring.complete.guide.service.ApplicationService;
+import com.arturfrimu.spring.complete.guide.service.scope.ApplicationService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

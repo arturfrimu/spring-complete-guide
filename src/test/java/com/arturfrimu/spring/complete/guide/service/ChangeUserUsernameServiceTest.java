@@ -4,6 +4,7 @@ import annotation.ServiceTest;
 import com.arturfrimu.spring.complete.guide.entity.User;
 import com.arturfrimu.spring.complete.guide.entity.UserPersonalInformation;
 import com.arturfrimu.spring.complete.guide.repository.UserRepository;
+import com.arturfrimu.spring.complete.guide.service.transactional.propagation.ChangeUserUsernameService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

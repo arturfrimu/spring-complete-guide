@@ -5,6 +5,7 @@ import com.arturfrimu.spring.complete.guide.entity.UserPersonalInformation;
 import com.arturfrimu.spring.complete.guide.mapper.UserMapper;
 import com.arturfrimu.spring.complete.guide.repository.UserRepository;
 import com.arturfrimu.spring.complete.guide.service.random.RandomCreateUserCommand;
+import com.arturfrimu.spring.complete.guide.service.transactional.propagation.CreateUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.arturfrimu.spring.complete.guide.service;
+package com.arturfrimu.spring.complete.guide.service.scope;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

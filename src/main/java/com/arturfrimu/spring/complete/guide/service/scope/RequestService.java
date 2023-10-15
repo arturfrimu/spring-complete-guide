@@ -1,4 +1,4 @@
-package com.arturfrimu.spring.complete.guide.service;
+package com.arturfrimu.spring.complete.guide.service.scope;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
+
 @Slf4j
 @Service
-@Scope("prototype")
+@Scope(value = "request", proxyMode = TARGET_CLASS)
 @EqualsAndHashCode
 @Getter
-public class PrototypeService {
+public class RequestService {
 
     private final UUID id = UUID.randomUUID();
 }

@@ -3,6 +3,7 @@ package com.arturfrimu.spring.complete.guide.service;
 import annotation.ServiceTest;
 import com.arturfrimu.spring.complete.guide.entity.Account;
 import com.arturfrimu.spring.complete.guide.repository.AccountRepository;
+import com.arturfrimu.spring.complete.guide.service.transactional.propagation.ChangeAccountNameUseCase;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

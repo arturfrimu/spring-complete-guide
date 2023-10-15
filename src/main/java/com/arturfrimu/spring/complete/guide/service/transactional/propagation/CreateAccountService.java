@@ -1,4 +1,4 @@
-package com.arturfrimu.spring.complete.guide.service;
+package com.arturfrimu.spring.complete.guide.service.transactional.propagation;
 
 import com.arturfrimu.spring.complete.guide.entity.Account;
 import com.arturfrimu.spring.complete.guide.repository.AccountRepository;

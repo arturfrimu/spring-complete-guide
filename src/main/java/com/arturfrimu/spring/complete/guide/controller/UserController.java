@@ -2,7 +2,7 @@ package com.arturfrimu.spring.complete.guide.controller;
 
 import com.arturfrimu.spring.complete.guide.controller.request.CreateUserRequest;
 import com.arturfrimu.spring.complete.guide.mapper.CreateUserRequestCommandMapper;
-import com.arturfrimu.spring.complete.guide.service.CreateUserUseCase;
+import com.arturfrimu.spring.complete.guide.service.transactional.propagation.CreateUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

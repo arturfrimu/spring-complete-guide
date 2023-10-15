@@ -1,10 +1,10 @@
 package com.arturfrimu.spring.complete.guide.facade;
 
 import com.arturfrimu.spring.complete.guide.annotation.Facade;
-import com.arturfrimu.spring.complete.guide.service.PrototypeService;
-import com.arturfrimu.spring.complete.guide.service.RequestService;
-import com.arturfrimu.spring.complete.guide.service.SessionService;
-import com.arturfrimu.spring.complete.guide.service.SingletonService;
+import com.arturfrimu.spring.complete.guide.service.scope.PrototypeService;
+import com.arturfrimu.spring.complete.guide.service.scope.RequestService;
+import com.arturfrimu.spring.complete.guide.service.scope.SessionService;
+import com.arturfrimu.spring.complete.guide.service.scope.SingletonService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
