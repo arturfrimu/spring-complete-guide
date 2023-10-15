@@ -1,4 +1,4 @@
-package com.arturfrimu.spring.complete.guide.facade;
+package com.arturfrimu.spring.complete.guide.facade.transactional.propagation;
 
 import com.arturfrimu.spring.complete.guide.annotation.Facade;
 import com.arturfrimu.spring.complete.guide.service.ChangeAccountNameService;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Facade
 @RequiredArgsConstructor
-public class TransactionalFacade {
+public class TransactionalPropagationFacade {
 
     private final CreateUserUseCase createUserUseCase;
     private final CreateAccountUseCase createAccountUseCase;
