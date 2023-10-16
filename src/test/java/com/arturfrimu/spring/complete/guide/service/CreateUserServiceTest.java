@@ -30,7 +30,7 @@ class CreateUserServiceTest {
     private CreateUserService createUserService;
 
     @Test
-    public void testCreateUserValid() {
+    void testCreateUserValid() {
         var command = RandomCreateUserCommand.builder().build().get();
         var actual = new User(command.phoneNumber(), new UserPersonalInformation(command.username(), command.password()));
 
@@ -42,14 +42,14 @@ class CreateUserServiceTest {
     }
 
     @Test
-    public void testCreateUserInvalidPhoneNumber() {
+    void testCreateUserInvalidPhoneNumber() {
         var command = RandomCreateUserCommand.builder().phoneNumber(null).build().get();
         var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
         assertEquals(format("Phone number can not be blank %s", command.phoneNumber()), exception.getMessage());
     }
 
     @Test
-    public void testCreateUserInvalidUsername() {
+    void testCreateUserInvalidUsername() {
         var command = RandomCreateUserCommand.builder().username(null).build().get();
         var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
         assertEquals(format("Username can not be blank %s", command.username()), exception.getMessage());
@@ -57,7 +57,7 @@ class CreateUserServiceTest {
 
 
     @Test
-    public void testCreateUserInvalidPassword() {
+    void testCreateUserInvalidPassword() {
         var command = RandomCreateUserCommand.builder().password(null).build().get();
         var exception = assertThrows(IllegalArgumentException.class, () -> createUserService.create(command));
         assertEquals(format("Password can not be blank %s", command.password()), exception.getMessage());
