@@ -18,30 +18,15 @@ public class UpdateCarPriceServiceReadUncommitted {
     private final CarRepository carRepository;
 
     @Transactional(isolation = READ_UNCOMMITTED)
-    public BigDecimal increase(Long carId, BigDecimal price) {
+    public void increase(Long carId, BigDecimal price) {
         var car = carRepository.findById(carId)
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: %s".formatted(carId)));
 
-        BigDecimal currentCarPrice = car.getPrice();
-        car.setPrice(currentCarPrice.add(price));
+        car.setPrice(car.getPrice().add(price));
 
         MultithreadingService.sleep(1000);
 
         var savedCar = carRepository.save(car);
 
-        return savedCar.getPrice();
-    }
-
-    @Transactional(isolation = READ_UNCOMMITTED)
-    public BigDecimal decrease(Long carId, BigDecimal price) {
-        var car = carRepository.findById(carId)
-                .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: %s".formatted(carId)));
-
-        BigDecimal currentCarPrice = car.getPrice();
-        car.setPrice(currentCarPrice.subtract(price));
-
-        var savedCar = carRepository.save(car);
-
-        return savedCar.getPrice();
     }
 }

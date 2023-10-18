@@ -32,7 +32,7 @@ class UpdateCarPriceServiceReadUncommittedTest {
         increaseThread.setName("increaseThread");
 
         Thread decreaseThread = new Thread(() -> {
-            updateCarPriceServiceReadUncommitted.decrease(savedCar.getId(), new BigDecimal(1000));
+            updateCarPriceServiceReadUncommitted.increase(savedCar.getId(), new BigDecimal(1000));
         });
 
         decreaseThread.setName("decreaseThread");
@@ -48,6 +48,6 @@ class UpdateCarPriceServiceReadUncommittedTest {
         Car car = carRepository.findById(savedCar.getId()).orElseThrow();
 
         // Check if a dirty read has occurred
-        assertEquals(new BigDecimal("10000.00"), car.getPrice());
+        assertEquals(new BigDecimal("12000.00"), car.getPrice());
     }
 }
