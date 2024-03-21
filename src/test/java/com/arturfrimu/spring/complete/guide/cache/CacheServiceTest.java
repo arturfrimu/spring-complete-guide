@@ -14,6 +14,11 @@ class CacheServiceTest {
     @Autowired
     private CacheService cacheService;
 
+    /**
+     * Validates the caching behavior of {@link CacheService} by measuring the retrieval time for the same data keys.
+     * The first access for a unique key is expected to take over 2000ms, simulating a time-consuming operation.
+     * Subsequent accesses should be under 2ms, indicating effective caching.
+     */
     @Test
     void getData() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThan(2000L); // 2000ms
