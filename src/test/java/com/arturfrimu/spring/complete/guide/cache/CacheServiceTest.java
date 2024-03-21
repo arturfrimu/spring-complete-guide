@@ -34,6 +34,12 @@ class CacheServiceTest {
         assertThat(measure(() -> cacheService.getData("3"))).isLessThan(2L); // 2ms
     }
 
+    /**
+     * Tests the caching and updating behavior of {@link CacheService}. It verifies that initial data retrieval for a key takes over 2000ms,
+     * suggesting a direct fetch operation. Subsequent retrievals should be faster (under 2ms), indicating data is served from the cache.
+     * The cache is then updated using {@code cachePut}, which should again take over 2000ms, simulating a refresh operation. Further
+     * retrievals post-update should remain quick, demonstrating the cache has been successfully updated and is serving the refreshed data.
+     */
     @Test
     void getDataV2() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThan(2000L); // 2000ms
