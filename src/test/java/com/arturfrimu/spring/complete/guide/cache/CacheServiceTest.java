@@ -59,6 +59,14 @@ class CacheServiceTest {
         assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms                          ' NOT AFFECTED '
     }
 
+    /**
+     * Tests the cache eviction process of {@link CacheService}. Initially, it verifies that fetching data by key takes over 2000ms,
+     * indicating a direct database access. Subsequent retrievals should be instant (under 2ms), reflecting cache usage.
+     *
+     * The cache is then cleared via {@code cacheEvict}, expected to be a quick operation (under 2ms). After cache eviction, accessing
+     * the same keys should again take over 2000ms, demonstrating that the data is fetched from the database, confirming the cache was
+     * effectively cleared.
+     */
     @Test
     void getDataV3() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThanOrEqualTo(2000L); // 2000ms
