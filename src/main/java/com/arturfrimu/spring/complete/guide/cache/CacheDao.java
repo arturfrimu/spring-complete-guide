@@ -3,7 +3,6 @@ package com.arturfrimu.spring.complete.guide.cache;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
