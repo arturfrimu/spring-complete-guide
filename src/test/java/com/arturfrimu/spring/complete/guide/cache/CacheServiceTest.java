@@ -20,7 +20,7 @@ class CacheServiceTest {
      * Subsequent accesses should be under 2ms, indicating effective caching.
      */
     @Test
-    void getData() {
+    void testCacheable() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThan(2000L); // 2000ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
@@ -41,7 +41,7 @@ class CacheServiceTest {
      * retrievals post-update should remain quick, demonstrating the cache has been successfully updated and is serving the refreshed data.
      */
     @Test
-    void getDataV2() {
+    void testCachePut() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThan(2000L); // 2000ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
@@ -68,7 +68,7 @@ class CacheServiceTest {
      * effectively cleared.
      */
     @Test
-    void getDataV3() {
+    void testCacheEvict() {
         assertThat(measure(() -> cacheService.getData("1"))).isGreaterThanOrEqualTo(2000L); // 2000ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThanOrEqualTo(2L); // 2ms
 
