@@ -46,10 +46,17 @@ class CacheServiceTest {
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
 
-        assertThat(measure(() -> cacheService.cachePut("1"))).isGreaterThan(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("2"))).isGreaterThan(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms
+        assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms
+
+        assertThat(measure(() -> cacheService.cachePut("1"))).isGreaterThan(2000L); // 2000ms   ' TAKE FROM ORIGINAL SOURCE AND PUT IN CACHE AGAIN  '
 
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
         assertThat(measure(() -> cacheService.getData("1"))).isLessThan(2L); // 2ms
+
+        assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms                          ' NOT AFFECTED '
+        assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms                          ' NOT AFFECTED '
     }
 
 
