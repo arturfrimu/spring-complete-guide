@@ -1,6 +1,7 @@
 package com.arturfrimu.spring.complete.guide.cache;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,11 @@ public class CacheService {
 
     @Cacheable("data")
     public String getData(String key) {
+        return cacheDao.getData(key);
+    }
+
+    @CachePut("data")
+    public String cachePut(String key) {
         return cacheDao.getData(key);
     }
 }
