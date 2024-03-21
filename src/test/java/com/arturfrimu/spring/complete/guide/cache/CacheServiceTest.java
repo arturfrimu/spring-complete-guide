@@ -59,10 +59,36 @@ class CacheServiceTest {
         assertThat(measure(() -> cacheService.getData("2"))).isLessThan(2L); // 2ms                          ' NOT AFFECTED '
     }
 
+    @Test
+    void getDataV3() {
+        assertThat(measure(() -> cacheService.getData("1"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("1"))).isLessThanOrEqualTo(2L); // 2ms
+
+        assertThat(measure(() -> cacheService.getData("2"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("2"))).isLessThanOrEqualTo(2L); // 2ms
+
+        assertThat(measure(() -> cacheService.getData("3"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("3"))).isLessThanOrEqualTo(2L); // 2ms
+
+        assertThat(measure(() -> cacheService.cacheEvict())).isLessThanOrEqualTo(2L); // 2ms                 ' CLEAR CACHE '
+
+        assertThat(measure(() -> cacheService.getData("1"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("2"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+        assertThat(measure(() -> cacheService.getData("3"))).isGreaterThanOrEqualTo(2000L); // 2000ms
+    }
+
 
     private long measure(Supplier<String> supplier) {
         long start = System.currentTimeMillis();
         supplier.get();
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        return end - start;
+    }
+
+    private long measure(Runnable runnable) {
+        long start = System.currentTimeMillis();
+        runnable.run();
         long end = System.currentTimeMillis();
         System.out.println(end - start);
         return end - start;
