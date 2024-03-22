@@ -19,6 +19,7 @@
 
     <modules>
         <module>cache</module>
+        <module>common</module>
     </modules>
 
     <properties>
