@@ -17,16 +17,21 @@ public class CacheService {
 
     @Cacheable("data")
     public String getData(String key) {
-        return cacheDao.getData(key);
+        String data = cacheDao.getData(key);
+        System.out.println("%s:%s".formatted(key, data));
+        return data;
     }
 
     @CachePut("data")
     public String cachePut(String key) {
-        return cacheDao.getData(key);
+        String data = cacheDao.getData(key);
+        System.out.println("%s:%s".formatted(key, data));
+        return data;
     }
 
     @CacheEvict(value = "data", allEntries = true)
     public void cacheEvict() {
+        System.out.println("EVICTED");
     }
 
     @Cacheable("data")
