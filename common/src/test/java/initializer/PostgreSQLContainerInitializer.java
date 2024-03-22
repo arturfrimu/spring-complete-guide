@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class PostgreSQLContainerInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
+    private static final PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:latest");
 
     public PostgreSQLContainerInitializer() {
         postgreSQLContainer.start();
