@@ -8,9 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>cache</name>
-    <properties>
-        <spring-boot-starter-cache.version>3.2.4</spring-boot-starter-cache.version>
-    </properties>
 
     <packaging>pom</packaging>
 
@@ -24,6 +21,10 @@
         <artifactId>spring-complete-guide</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <properties>
+        <spring-boot-starter-cache.version>3.2.4</spring-boot-starter-cache.version>
+    </properties>
 
     <dependencies>
         <dependency>
