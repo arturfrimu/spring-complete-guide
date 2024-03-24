@@ -3,10 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>read-uncommitted</artifactId>
+    <groupId>com.arturfrimu</groupId>
+    <artifactId>propagation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>read-uncommited</name>
+    <name>propagation</name>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>read-uncommitted</module>
+    </modules>
 
     <parent>
         <groupId>com.arturfrimu</groupId>
@@ -17,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

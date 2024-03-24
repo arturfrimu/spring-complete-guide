@@ -20,6 +20,7 @@
     <modules>
         <module>cache</module>
         <module>common</module>
+        <module>transactional</module>
     </modules>
 
     <properties>

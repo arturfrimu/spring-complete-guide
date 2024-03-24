@@ -3,28 +3,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arturfrimu</groupId>
-    <artifactId>transactional</artifactId>
+    <artifactId>read-uncommitted</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>transactional</name>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>propagation</module>
-    </modules>
+    <name>read-uncommited</name>
 
     <parent>
-        <groupId>com.arturfrimu.spring</groupId>
-        <artifactId>spring-complete-guide</artifactId>
+        <groupId>com.arturfrimu</groupId>
+        <artifactId>propagation</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
