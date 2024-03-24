@@ -12,7 +12,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>propagation</module>
+        <module>isolation</module>
     </modules>
 
     <parent>
