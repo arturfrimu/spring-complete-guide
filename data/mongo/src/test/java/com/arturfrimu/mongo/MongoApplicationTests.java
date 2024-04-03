@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-class MongoApplicationTest {
+class MongoApplicationTests {
 
     ApplicationContext applicationContext;
 
