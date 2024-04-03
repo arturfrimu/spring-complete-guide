@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  mongodb:
+    image: mongo:7.0.7
+    container_name: spring-complete-guide-data-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  mongodb-data:
+    driver: local
