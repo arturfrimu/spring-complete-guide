@@ -1,0 +1,39 @@
+### Create developer
+POST http://localhost:8787/api/v1/developers
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Week",
+  "email": "john.week@mail.com",
+  "speciality": "JavaScript Developer",
+  "status": "ACTIVE"
+}
+
+### Update developer
+PUT http://localhost:8787/api/v1/developers
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "John",
+  "lastName": "Snow",
+  "email": "john.snow@mail.com",
+  "speciality": "Java Developer",
+  "status": "ACTIVE"
+}
+
+### Find all developers
+GET http://localhost:8787/api/v1/developers
+
+### Find developer by id
+GET http://localhost:8787/api/v1/developers/1
+
+### Delete developer by id soft
+DELETE http://localhost:8787/api/v1/developers/2
+
+### Delete developer by id hard
+DELETE http://localhost:8787/api/v1/developers/1?isHard=true
+
+
+

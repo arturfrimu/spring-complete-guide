@@ -1,0 +1,15 @@
+server:
+  port: 8787
+spring:
+    application:
+      name: crud
+
+    r2dbc:
+      url: r2dbc:postgresql://localhost:5432/crud_reactive
+      username: postgres
+      password: postgres
+    flyway:
+      url: jdbc:postgresql://localhost:5432/crud_reactive
+      user: postgres
+      password: postgres
+      locations: classpath:db/migration
