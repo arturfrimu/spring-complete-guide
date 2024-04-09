@@ -30,6 +30,6 @@ public class DeveloperEntity implements Persistable<Long> {
     }
 
     public enum Status {
-        ACTIVE, DELETED;
+        ACTIVE, DELETED
     }
 }
