@@ -23,6 +23,7 @@
         <module>transactional</module>
         <module>data</module>
         <module>reactive</module>
+        <module>ai</module>
     </modules>
 
     <properties>
