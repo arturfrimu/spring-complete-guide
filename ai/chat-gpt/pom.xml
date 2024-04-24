@@ -3,21 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arturfrimu</groupId>
-    <artifactId>ai</artifactId>
+    <artifactId>chat-gpt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>ai</name>
+    <name>chat-gpt</name>
 
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>chat-gpt</module>
-    </modules>
+    <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.arturfrimu.spring</groupId>
-        <artifactId>spring-complete-guide</artifactId>
+        <groupId>com.arturfrimu</groupId>
+        <artifactId>ai</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -31,12 +26,37 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.ai</groupId>-->
+<!--            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.experimental.ai</groupId>
+            <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
+            <version>0.7.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>

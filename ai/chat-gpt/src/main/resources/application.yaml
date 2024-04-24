@@ -1,0 +1,8 @@
+spring:
+  ai:
+    openai.api-key: YOUR_A_P_I____K_E_Y
+
+openai:
+  url: https://api.openai.com/v1/engines/
+  api-key:  YOUR_A_P_I____K_E_Y
+  bot-id: ft:gpt-3.5-turbo-1106:personal::8UHr0aYv

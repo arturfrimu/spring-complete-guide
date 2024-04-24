@@ -1,11 +1,11 @@
-package com.arturfrimu.ai;
+package com.arturfrimu.chatgpt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AiApplication {
+public class ChatGptApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AiApplication.class, args);
+        SpringApplication.run(ChatGptApplication.class, args);
     }
 }
