@@ -9,17 +9,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private static final AtomicInteger requestsCount = new AtomicInteger(0);
+    private final HttpServletRequestLogger logger;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("Requests count: " + requestsCount.incrementAndGet());
+        logger.logRequestDetails(request);
         filterChain.doFilter(request, response);
     }
 }
