@@ -24,6 +24,7 @@
         <module>data</module>
         <module>reactive</module>
         <module>ai</module>
+        <module>security</module>
     </modules>
 
     <properties>
