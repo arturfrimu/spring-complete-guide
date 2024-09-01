@@ -11,6 +11,10 @@
 
     <packaging>pom</packaging>
 
+    <modules>
+        <module>one-to-one-chat</module>
+    </modules>
+
     <parent>
         <groupId>com.arturfrimu.spring</groupId>
         <artifactId>spring-complete-guide</artifactId>
