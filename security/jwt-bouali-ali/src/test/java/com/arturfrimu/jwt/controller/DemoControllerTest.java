@@ -25,7 +25,7 @@ class DemoControllerTest {
     @Autowired
     private TestRestTemplate testRestTemplate;
     @Autowired
-    private HttpHeaders basicSecurityHeaders;
+    private HttpHeaders bearerSecurityHeaders;
 
     @Test
     void sayHello() {
@@ -39,7 +39,7 @@ class DemoControllerTest {
                 .toUri();
 
         RequestEntity<Void> requestEntity = RequestEntity.get(uri)
-                .headers(basicSecurityHeaders)
+                .headers(bearerSecurityHeaders)
                 .build();
 
         ResponseEntity<String> response = testRestTemplate.exchange(requestEntity, sayHelloResponseType);
