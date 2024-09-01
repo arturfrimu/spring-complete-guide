@@ -14,11 +14,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final HttpServletRequestLogger logger;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        logger.logRequestDetails(request);
         filterChain.doFilter(request, response);
     }
 }
