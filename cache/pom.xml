@@ -22,27 +22,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <properties>
-        <spring-boot-starter-cache.version>3.2.4</spring-boot-starter-cache.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-            <version>${spring-boot-starter-cache.version}</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <plugin>

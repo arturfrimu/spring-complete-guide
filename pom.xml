@@ -35,6 +35,7 @@
         <assertj-core.version>3.24.2</assertj-core.version>
         <junit-jupiter-api.version>5.10.1</junit-jupiter-api.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
+        <spring-boot-starter-cache.version>3.2.4</spring-boot-starter-cache.version>
     </properties>
 
     <dependencyManagement>
@@ -70,6 +71,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-validation</artifactId>
                 <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-cache</artifactId>
+                <version>${spring-boot-starter-cache.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
