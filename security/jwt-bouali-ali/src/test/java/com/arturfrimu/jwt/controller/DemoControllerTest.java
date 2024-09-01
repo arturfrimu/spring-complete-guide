@@ -44,7 +44,7 @@ class DemoControllerTest {
 
         ResponseEntity<String> response = testRestTemplate.exchange(requestEntity, sayHelloResponseType);
 
-        Assertions.assertThat(response.getStatusCode().is2xxSuccessful()).isTrue();
+        Assertions.assertThat(response.getStatusCode().toString()).isEqualTo("200 OK");
         Assertions.assertThat(response.getBody()).isEqualTo("Hello from secured endpoint");
     }
 
