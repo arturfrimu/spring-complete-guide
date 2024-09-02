@@ -25,6 +25,7 @@
         <module>reactive</module>
         <module>ai</module>
         <module>security</module>
+        <module>web-sockets</module>
     </modules>
 
     <properties>
