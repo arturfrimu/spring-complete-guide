@@ -5,20 +5,24 @@ import com.arturfrimu.jwt.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+import static lombok.AccessLevel.PROTECTED;
+
+@Getter
 @Entity
 @Table(name = "_user")
+@Immutable
+@Builder
+@AllArgsConstructor(access = PROTECTED)
+@NoArgsConstructor(access = PROTECTED)
 public class User implements UserDetails {
 
     @Id
@@ -43,6 +47,10 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public String setPassword(String password) {
+        return this.password = password;
     }
 
     @Override

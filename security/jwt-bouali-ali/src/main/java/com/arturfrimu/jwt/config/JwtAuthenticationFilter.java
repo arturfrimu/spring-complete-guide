@@ -33,20 +33,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NotNull HttpServletResponse response,
             @NotNull FilterChain filterChain
     ) throws ServletException, IOException {
-        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String servletPath = request.getServletPath();
+        if (servletPath.contains("/api/v1/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("No JWT token found or token does not start with 'Bearer '");
             return;
         }
-        String jwt = authorization.substring(7);
-        final String userEmail;
+        final String jwt = authorization.substring(7);
         if (!authorization.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-        userEmail = jwtService.extractUsername(jwt);
+        final String userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             var isTokenValid = tokenRepository.findByToken(jwt)
