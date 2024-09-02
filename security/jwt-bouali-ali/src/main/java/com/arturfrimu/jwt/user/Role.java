@@ -2,6 +2,7 @@ package com.arturfrimu.jwt.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collections;
@@ -10,8 +11,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.arturfrimu.jwt.user.Permission.*;
+import static lombok.AccessLevel.PRIVATE;
 
+@Getter
 @RequiredArgsConstructor
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public enum Role {
 
     USER(Collections.emptySet()),
@@ -36,8 +40,7 @@ public enum Role {
             )
     );
 
-    @Getter
-    private final Set<Permission> permissions;
+    Set<Permission> permissions;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
         var authorities = getPermissions()

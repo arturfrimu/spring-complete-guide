@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,20 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public class JwtService {
 
-    private final JwtProperties jwtProperties;
+    JwtProperties jwtProperties;
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public Optional<String> extractUsername(String token) {
+        return Optional.of(extractClaim(token, Claims::getSubject));
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -42,9 +47,7 @@ public class JwtService {
         return buildToken(extraClaims, userDetails, jwtProperties.getExpiration());
     }
 
-    public String generateRefreshToken(
-            UserDetails userDetails
-    ) {
+    public String generateRefreshToken(UserDetails userDetails) {
         return buildToken(new HashMap<>(), userDetails, jwtProperties.getRefreshToken().getExpiration());
     }
 
@@ -64,7 +67,8 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
+        final var username = extractUsername(token)
+                .orElseThrow(() -> new IllegalArgumentException("Error on extracting username from token: " + token));
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 

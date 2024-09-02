@@ -3,10 +3,7 @@ package com.arturfrimu.jwt.user;
 
 import com.arturfrimu.jwt.token.Token;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Immutable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +11,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-import static lombok.AccessLevel.PROTECTED;
-
+@Setter
 @Getter
 @Entity
 @Table(name = "_user")
 @Immutable
 @Builder
-@AllArgsConstructor(access = PROTECTED)
-@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -31,6 +27,7 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private String email;
+    @Setter
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -47,10 +44,6 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public String setPassword(String password) {
-        return this.password = password;
     }
 
     @Override

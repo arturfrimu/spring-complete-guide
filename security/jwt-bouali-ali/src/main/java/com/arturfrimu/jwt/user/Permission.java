@@ -2,8 +2,13 @@ package com.arturfrimu.jwt.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
+import static lombok.AccessLevel.PRIVATE;
+
+@Getter
 @RequiredArgsConstructor
+@FieldDefaults(level = PRIVATE, makeFinal = true)
 public enum Permission {
 
     ADMIN_READ("admin:read"),
@@ -13,10 +18,7 @@ public enum Permission {
     MANAGER_READ("management:read"),
     MANAGER_UPDATE("management:update"),
     MANAGER_CREATE("management:create"),
-    MANAGER_DELETE("management:delete")
+    MANAGER_DELETE("management:delete");
 
-    ;
-
-    @Getter
-    private final String permission;
+    String permission;
 }
