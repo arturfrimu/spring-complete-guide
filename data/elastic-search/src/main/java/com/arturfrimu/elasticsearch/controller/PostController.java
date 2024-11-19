@@ -6,6 +6,9 @@ import com.arturfrimu.elasticsearch.repository.PostRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +40,15 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable String id) {
         postRepository.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public Page<Post> searchPosts(
+            @RequestParam String searchText,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "100") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return postRepository.searchByQuery(searchText, pageable);
     }
 }
