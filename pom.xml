@@ -26,6 +26,7 @@
         <module>ai</module>
         <module>security</module>
         <module>web-sockets</module>
+        <module>graphql</module>
     </modules>
 
     <properties>
@@ -158,6 +159,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>${postgressql.version}</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.leangen.graphql</groupId>
+                <artifactId>graphql-spqr-spring-boot-starter</artifactId>
+                <version>1.0.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

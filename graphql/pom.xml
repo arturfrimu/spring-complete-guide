@@ -3,24 +3,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.arturfrimu</groupId>
-    <artifactId>transactional</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-
-    <name>transactional</name>
-
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>isolation</module>
-        <module>propagation</module>
-    </modules>
-
     <parent>
         <groupId>com.arturfrimu.spring</groupId>
         <artifactId>spring-complete-guide</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <groupId>com.arturfrimu.graphql</groupId>
+    <artifactId>graphql</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>graphql</name>
+
+    <properties>
+        <java.version>21</java.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -32,14 +29,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.leangen.graphql</groupId>
+            <artifactId>graphql-spqr-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 </project>
