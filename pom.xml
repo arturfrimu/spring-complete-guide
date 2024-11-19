@@ -43,6 +43,7 @@
         <aspectjrt.version>1.9.22.1</aspectjrt.version>
         <jwt.version>0.11.5</jwt.version>
         <postgressql.version>42.7.4</postgressql.version>
+        <graph-ql-spqr-version>1.0.1</graph-ql-spqr-version>
     </properties>
 
     <dependencyManagement>
@@ -163,8 +164,22 @@
             <dependency>
                 <groupId>io.leangen.graphql</groupId>
                 <artifactId>graphql-spqr-spring-boot-starter</artifactId>
-                <version>1.0.1</version>
+                <version>${graph-ql-spqr-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>8.5.0</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                <artifactId>jackson-databind</artifactId>-->
+<!--            </dependency>-->
         </dependencies>
     </dependencyManagement>
 </project>

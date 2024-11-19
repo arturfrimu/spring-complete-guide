@@ -1,2 +1,10 @@
 server:
   port: 8034
+
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
