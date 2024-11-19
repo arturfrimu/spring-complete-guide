@@ -8,3 +8,8 @@ spring:
     elasticsearch:
       repositories:
         enabled: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: false

@@ -45,6 +45,7 @@
         <postgressql.version>42.7.4</postgressql.version>
         <graph-ql-spqr-version>1.0.1</graph-ql-spqr-version>
         <elasticsearch-rest-high-level-client.version>8.5.0</elasticsearch-rest-high-level-client.version>
+        <thymeleaf-spring5.version>3.1.2.RELEASE</thymeleaf-spring5.version>
     </properties>
 
     <dependencyManagement>
@@ -170,6 +171,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+                <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot-starter.version}</version>
             </dependency>
         </dependencies>

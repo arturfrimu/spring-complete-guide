@@ -1,4 +1,9 @@
 ```http request
+http://localhost:8034/posts/search?searchText=dignissimos
+```
+
+
+```http request
 ###
 POST http://localhost:8034/posts
 Content-Type: application/json
