@@ -18,7 +18,7 @@
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <!-- Import the navbar -->
-    <div th:replace="~{fragments/pagination :: pagination}"></div>
+    <div th:replace="~{fragments/pagination :: pagination(basePath='/comments', totalPages=${totalPages}, currentPage=${currentPage}, searchText=${searchText})}"></div>
 
     <!-- Display comments in a card layout -->
     <div th:if="${comments != null}" class="row">
@@ -38,7 +38,8 @@
     </div>
 
     <!-- Import the navbar -->
-    <div th:replace="~{fragments/pagination :: pagination}"></div>
+    <div th:replace="~{fragments/pagination :: pagination(basePath='/comments', totalPages=${totalPages}, currentPage=${currentPage}, searchText=${searchText})}"></div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

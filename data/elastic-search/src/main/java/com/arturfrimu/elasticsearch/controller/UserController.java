@@ -26,7 +26,7 @@ public class UserController {
     @GetMapping
     public String searchUsers(
             @RequestParam(required = false) String searchText,
-            @RequestParam(required = false, defaultValue = "1") int page,
+            @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {

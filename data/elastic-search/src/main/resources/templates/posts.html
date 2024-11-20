@@ -18,7 +18,8 @@
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <!-- Import the navbar -->
-    <div th:replace="~{fragments/pagination :: pagination}"></div>
+    <div th:replace="~{fragments/pagination :: pagination(basePath='/posts', totalPages=${totalPages}, currentPage=${currentPage}, searchText=${searchText})}"></div>
+
 
     <!-- Display posts -->
     <div th:if="${posts != null}">
@@ -38,7 +39,7 @@
     </div>
 
     <!-- Import the navbar -->
-    <div th:replace="~{fragments/pagination :: pagination}"></div>
+    <div th:replace="~{fragments/pagination :: pagination(basePath='/posts', totalPages=${totalPages}, currentPage=${currentPage}, searchText=${searchText})}"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
