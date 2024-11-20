@@ -27,6 +27,7 @@
         <module>security</module>
         <module>web-sockets</module>
         <module>graphql</module>
+        <module>google-integrations</module>
     </modules>
 
     <properties>
