@@ -40,7 +40,7 @@
         <junit-jupiter-api.version>5.10.1</junit-jupiter-api.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <spring-boot-starter-cache.version>3.2.4</spring-boot-starter-cache.version>
-        <springdoc-openapi-starter-webmvc-ui.version>2.1.0</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
         <aspectjrt.version>1.9.22.1</aspectjrt.version>
         <jwt.version>0.11.5</jwt.version>
         <postgressql.version>42.7.4</postgressql.version>
