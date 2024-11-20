@@ -4,7 +4,9 @@ import com.arturfrimu.elasticsearch.entity.Album;
 import com.arturfrimu.elasticsearch.repository.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
@@ -23,6 +25,10 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class AlbumLoader implements CommandLineRunner {
 
+    @NonFinal
+    @Value("${script.populate-elastic-search}")
+    private Boolean populateElasticSearch;
+
     private static final String ALBUMS_URL_JSON_PLACEHOLDER = "https://jsonplaceholder.typicode.com/albums";
 
     AlbumRepository albumRepository;
@@ -36,9 +42,11 @@ public class AlbumLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        albumRepository.deleteAll();
+        if (populateElasticSearch) {
+            albumRepository.deleteAll();
 
-        fetchAndStoreAlbums();
+            fetchAndStoreAlbums();
+        }
     }
 
     //@formatter:off

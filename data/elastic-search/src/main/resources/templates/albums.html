@@ -7,38 +7,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<!-- Import the navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
 <div class="container mt-5">
     <h1 class="mb-4">Albums</h1>
 
     <!-- Display error if exists -->
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-    <!-- Pagination -->
-    <div th:if="${totalPages > 1}" class="mt-3">
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Import the navbar -->
+    <div th:replace="~{fragments/pagination :: pagination}"></div>
 
-    <!-- Display albums -->
-    <div th:if="${albums != null}">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="list-group">
-                    <div th:each="album : ${albums}" class="list-group-item">
-                        <h5 th:text="${album.userId}"></h5>
-                        <p th:text="${album.title}"></p>
-                    </div>
+    <!-- Display albums in a card layout -->
+    <div th:if="${albums != null}" class="row">
+        <div th:each="album : ${albums}" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'User ID: ' + ${album.userId}"></h5>
+                    <p class="card-text" th:text="${album.title}"></p>
                 </div>
             </div>
         </div>
@@ -47,22 +35,8 @@
         <p>No albums available</p>
     </div>
 
-    <!-- Pagination -->
-    <div th:if="${totalPages > 1}" class="mt-3">
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/albums/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Import the navbar -->
+    <div th:replace="~{fragments/pagination :: pagination}"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

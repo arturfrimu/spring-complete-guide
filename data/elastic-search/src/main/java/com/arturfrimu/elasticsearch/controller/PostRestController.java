@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.*;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PostRestController {
 
-    PostRepository postRepository;
+    PostRepository repository;
 
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        return ResponseEntity.ok(postRepository.save(post));
+        return ResponseEntity.ok(repository.save(post));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Post> findById(@PathVariable String id) {
-        return ResponseEntity.ok(postRepository.findById(id)
+        return ResponseEntity.ok(repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Post not found with id %s".formatted(id))));
     }
 
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAll() {
-        return ResponseEntity.ok(postRepository.findAll());
+        return ResponseEntity.ok(repository.findAll());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable String id) {
-        postRepository.deleteById(id);
+        repository.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -21,18 +21,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TodoController {
 
-    TodoRepository todoRepository;
+    TodoRepository repository;
 
     @GetMapping
     public String searchTodos(
-            @RequestParam String searchText,
+            @RequestParam(required = false) String searchText,
             @RequestParam(required = false, defaultValue = "true") boolean completed,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Todo> todos = todoRepository.searchByQuery(searchText, completed, pageable);
+        Page<Todo> todos = repository.searchByQuery(searchText, completed, pageable);
+
+        if (todos.isEmpty()) {
+            todos = repository.findAll(pageable);
+        }
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("todos", todos.getContent());

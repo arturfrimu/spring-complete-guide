@@ -21,17 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CommentController {
 
-    CommentRepository commentRepository;
+    CommentRepository repository;
 
     @GetMapping
     public String searchComments(
-            @RequestParam String searchText,
+            @RequestParam(required = false) String searchText,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Comment> comments = commentRepository.searchByQuery(searchText, pageable);
+        Page<Comment> comments = repository.searchByQuery(searchText, pageable);
+
+        if (comments.isEmpty()) {
+            comments = repository.findAll(pageable);
+        }
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("comments", comments.getContent());

@@ -4,7 +4,9 @@ import com.arturfrimu.elasticsearch.entity.User;
 import com.arturfrimu.elasticsearch.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
@@ -23,6 +25,10 @@ import static lombok.AccessLevel.PRIVATE;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class UserLoader implements CommandLineRunner {
 
+    @NonFinal
+    @Value("${script.populate-elastic-search}")
+    private Boolean populateElasticSearch;
+
     private static final String USERS_URL_JSON_PLACEHOLDER = "https://jsonplaceholder.typicode.com/users";
 
     UserRepository userRepository;
@@ -36,9 +42,11 @@ public class UserLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        userRepository.deleteAll();
+        if (populateElasticSearch) {
+            userRepository.deleteAll();
 
-        fetchAndStoreUsers();
+            fetchAndStoreUsers();
+        }
     }
 
     //@formatter:off

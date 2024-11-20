@@ -21,17 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PhotoController {
 
-    PhotoRepository photoRepository;
+    PhotoRepository repository;
 
     @GetMapping
     public String searchPhotos(
-            @RequestParam String searchText,
+            @RequestParam(required = false) String searchText,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Photo> photos = photoRepository.searchByQuery(searchText, pageable);
+        Page<Photo> photos = repository.searchByQuery(searchText, pageable);
+
+        if (photos.isEmpty()) {
+            photos = repository.findAll(pageable);
+        }
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("photos", photos.getContent());

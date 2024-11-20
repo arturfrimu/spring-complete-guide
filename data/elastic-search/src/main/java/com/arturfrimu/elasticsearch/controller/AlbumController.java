@@ -21,17 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AlbumController {
 
-    AlbumRepository albumRepository;
+    AlbumRepository repository;
 
     @GetMapping
     public String searchAlbums(
-            @RequestParam String searchText,
+            @RequestParam(required = false) String searchText,
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Album> albums = albumRepository.searchByQuery(searchText, pageable);
+        Page<Album> albums = repository.searchByQuery(searchText, pageable);
+
+        if (albums.isEmpty()) {
+            albums = repository.findAll(pageable);
+        }
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("albums", albums.getContent());

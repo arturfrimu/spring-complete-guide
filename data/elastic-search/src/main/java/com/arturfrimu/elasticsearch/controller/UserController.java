@@ -21,17 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
 
-    UserRepository userRepository;
+    UserRepository repository;
 
     @GetMapping
     public String searchUsers(
-            @RequestParam String searchText,
+            @RequestParam(required = false) String searchText,
             @RequestParam(required = false, defaultValue = "1") int page,
             @RequestParam(required = false, defaultValue = "10") int size,
             Model model
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<User> users = userRepository.searchByQuery(searchText, pageable);
+        Page<User> users = repository.searchByQuery(searchText, pageable);
+
+        if (users.isEmpty()) {
+            users = repository.findAll(pageable);
+        }
 
         model.addAttribute("searchText", searchText);
         model.addAttribute("users", users.getContent());

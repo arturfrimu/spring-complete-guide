@@ -13,3 +13,6 @@ spring:
     suffix: .html
     mode: HTML
     cache: false
+
+script:
+  populate-elastic-search: false

@@ -7,40 +7,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<!-- Import the navbar -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
 <div class="container mt-5">
     <h1 class="mb-4">Comments</h1>
 
     <!-- Display error if exists -->
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-    <!-- Pagination -->
-    <div th:if="${totalPages > 1}" class="mt-3">
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Import the navbar -->
+    <div th:replace="~{fragments/pagination :: pagination}"></div>
 
-    <!-- Display comments -->
-    <div th:if="${comments != null}">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="list-group">
-                    <div th:each="comment : ${comments}" class="list-group-item">
-                        <h5 th:text="${comment.postId}"></h5>
-                        <p th:text="${comment.name}"></p>
-                        <p th:text="${comment.email}"></p>
-                        <p th:text="${comment.body}"></p>
-                    </div>
+    <!-- Display comments in a card layout -->
+    <div th:if="${comments != null}" class="row">
+        <div th:each="comment : ${comments}" class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="'Post ID: ' + ${comment.postId}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="'Name: ' + ${comment.name}"></h6>
+                    <p class="card-text" th:text="'Email: ' + ${comment.email}"></p>
+                    <p class="card-text" th:text="${comment.body}"></p>
                 </div>
             </div>
         </div>
@@ -49,22 +37,8 @@
         <p>No comments available</p>
     </div>
 
-    <!-- Pagination -->
-    <div th:if="${totalPages > 1}" class="mt-3">
-        <nav>
-            <ul class="pagination">
-                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
-                </li>
-                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
-                </li>
-                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
-                    <a class="page-link" th:href="@{/comments/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Import the navbar -->
+    <div th:replace="~{fragments/pagination :: pagination}"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
