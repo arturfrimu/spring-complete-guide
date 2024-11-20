@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User Listing</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Users</h1>
+
+    <!-- Display error if exists -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <!-- Pagination -->
+    <div th:if="${totalPages > 1}" class="mt-3">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Display users -->
+    <div th:if="${users != null}">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="list-group">
+                    <div th:each="user : ${users}" class="list-group-item">
+                        <h5 th:text="${user.name}"></h5>
+                        <p th:text="${user.username}"></p>
+                        <p th:text="${user.email}"></p>
+                        <p th:text="${user.phone}"></p>
+                        <p th:text="${user.website}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${users == null}">
+        <p>No users available</p>
+    </div>
+
+    <!-- Pagination -->
+    <div th:if="${totalPages > 1}" class="mt-3">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${currentPage - 1}, size=10)}">Previous</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${i}, size=10)}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/users/search(searchText=${searchText}, page=${currentPage + 1}, size=10)}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

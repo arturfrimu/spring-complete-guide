@@ -31,10 +31,13 @@ public class PostLoader implements CommandLineRunner {
     public void fetchAndStorePosts() {
         ResponseEntity<List<Post>> response = restTemplate.exchange(RequestEntity.get(POSTS_URL_JSON_PLACEHOLDER).build(), postsList);
         postRepository.saveAll(Objects.requireNonNull(response.getBody()));
+        log.info("Saved {} posts", postRepository.count());
     }
 
     @Override
     public void run(String... args) {
+        postRepository.deleteAll();
+
         fetchAndStorePosts();
     }
 

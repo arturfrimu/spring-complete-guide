@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class CommentsLoader implements CommandLineRunner {
+public class CommentLoader implements CommandLineRunner {
 
     private static final String COMMENTS_URL_JSON_PLACEHOLDER = "https://jsonplaceholder.typicode.com/comments";
 
@@ -31,10 +31,13 @@ public class CommentsLoader implements CommandLineRunner {
     public void fetchAndStoreComments() {
         ResponseEntity<List<Comment>> response = restTemplate.exchange(RequestEntity.get(COMMENTS_URL_JSON_PLACEHOLDER).build(), commentsList);
         commentRepository.saveAll(Objects.requireNonNull(response.getBody()));
+        log.info("Saved {} comments", commentRepository.count());
     }
 
     @Override
     public void run(String... args) {
+        commentRepository.deleteAll();
+
         fetchAndStoreComments();
     }
 
