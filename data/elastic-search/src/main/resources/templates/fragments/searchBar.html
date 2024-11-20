@@ -1,0 +1,8 @@
+<!-- fragments/searchBar.html -->
+<div th:fragment="searchBar(basePath, searchText)">
+    <form class="d-flex" th:action="@{|${basePath}/search|}" method="get">
+        <input class="form-control me-2" type="search" name="searchText" placeholder="Search albums..."
+               aria-label="Search" th:value="${searchText}">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+</div>

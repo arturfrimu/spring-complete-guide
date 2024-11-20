@@ -14,6 +14,8 @@
 <div class="container mt-5">
     <h1 class="mb-4">User Profiles</h1>
 
+    <div th:replace="~{fragments/searchBar :: searchBar(basePath='/users', searchText=${searchText})}"></div>
+
     <!-- Display error if exists -->
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 

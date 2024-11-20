@@ -1,8 +1,4 @@
-<div th:fragment="pagination(basePath, totalPages, currentPage, searchText)">
-    <span th:text="'Base Path: ' + ${basePath}"></span>
-    <span th:text="'Total Pages: ' + ${totalPages}"></span>
-    <span th:text="'Current Page: ' + ${currentPage}"></span>
-    <span th:text="'Search Text: ' + ${searchText}"></span>
+<div class="mt-2" th:fragment="pagination(basePath, totalPages, currentPage, searchText)">
     <nav>
         <ul class="pagination">
             <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">

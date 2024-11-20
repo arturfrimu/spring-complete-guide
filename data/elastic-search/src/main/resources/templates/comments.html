@@ -14,6 +14,8 @@
 <div class="container mt-5">
     <h1 class="mb-4">Comments</h1>
 
+    <div th:replace="~{fragments/searchBar :: searchBar(basePath='/comments', searchText=${searchText})}"></div>
+
     <!-- Display error if exists -->
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 

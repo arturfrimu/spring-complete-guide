@@ -14,11 +14,14 @@
 <div class="container mt-5">
     <h1 class="mb-4">Todos</h1>
 
+    <div th:replace="~{fragments/searchBar :: searchBar(basePath='/todos', searchText=${searchText})}"></div>
+
     <!-- Display error if exists -->
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
     <!-- Import the navbar -->
     <div th:replace="~{fragments/pagination :: pagination(basePath='/todos', totalPages=${totalPages}, currentPage=${currentPage}, searchText=${searchText})}"></div>
+
 
     <!-- Display todos as a list with checkboxes -->
     <div th:if="${todos != null}">
