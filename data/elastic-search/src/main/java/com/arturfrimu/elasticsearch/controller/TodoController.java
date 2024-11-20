@@ -35,9 +35,10 @@ public class TodoController {
         Page<Todo> todos = repository.searchByQuery(searchText, completed, pageable);
 
         if (todos.isEmpty()) {
-            todos = repository.findAll(pageable);
+            todos = repository.findAllByCompleted(completed, pageable);
         }
 
+        model.addAttribute("completed", completed);
         model.addAttribute("searchText", searchText);
         model.addAttribute("todos", todos.getContent());
         model.addAttribute("totalPages", todos.getTotalPages());

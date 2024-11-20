@@ -43,5 +43,21 @@ public interface TodoRepository extends ElasticsearchRepository<Todo, String> {
             }
             """)
     Page<Todo> searchByQuery(String searchText, Boolean completed, Pageable pageable);
+
+    @Query("""
+        {
+          "bool": {
+            "filter": [
+              {
+                "term": {
+                  "completed": "?0"
+                }
+              }
+            ]
+          }
+        }
+        """)
+    Page<Todo> findAllByCompleted(Boolean completed, Pageable pageable);
+
 }
 
