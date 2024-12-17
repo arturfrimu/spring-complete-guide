@@ -28,6 +28,7 @@
         <module>web-sockets</module>
         <module>graphql</module>
         <module>google-integrations</module>
+        <module>prometheus-and-grafana</module>
     </modules>
 
     <properties>
@@ -178,6 +179,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
                 <version>${spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>1.14.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
