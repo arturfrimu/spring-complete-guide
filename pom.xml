@@ -48,6 +48,7 @@
         <graph-ql-spqr-version>1.0.1</graph-ql-spqr-version>
         <elasticsearch-rest-high-level-client.version>8.5.0</elasticsearch-rest-high-level-client.version>
         <thymeleaf-spring5.version>3.1.2.RELEASE</thymeleaf-spring5.version>
+        <micrometer-registry-prometheus.version>1.14.2</micrometer-registry-prometheus.version> <!--1.14.2-->
     </properties>
 
     <dependencyManagement>
@@ -183,7 +184,7 @@
             <dependency>
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
-                <version>1.14.2</version>
+                <version>${micrometer-registry-prometheus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
