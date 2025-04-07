@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: google-drive-integration
+
+server:
+  port: 8093
+
+google:
+  credentials:
+    file:
+      path: C:\Users\Agent\Desktop\projects\spring-complete-guide\google-drive-integration\cred.json

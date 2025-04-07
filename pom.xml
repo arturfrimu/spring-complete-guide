@@ -29,6 +29,7 @@
         <module>graphql</module>
         <module>google-integrations</module>
         <module>prometheus-and-grafana</module>
+        <module>google-drive-integration</module>
     </modules>
 
     <properties>
@@ -49,6 +50,10 @@
         <elasticsearch-rest-high-level-client.version>8.5.0</elasticsearch-rest-high-level-client.version>
         <thymeleaf-spring5.version>3.1.2.RELEASE</thymeleaf-spring5.version>
         <micrometer-registry-prometheus.version>1.14.2</micrometer-registry-prometheus.version> <!--1.14.2-->
+        <google-api-client.version>2.3.0</google-api-client.version>
+<!--        <google-api-services-drive.version>v3-rev136-1.25.0</google-api-services-drive.version>-->
+        <google-api-services-drive.version>v3-rev20240123-2.0.0</google-api-services-drive.version>
+        <google-http-client-jackson2.version>1.33.0</google-http-client-jackson2.version>
     </properties>
 
     <dependencyManagement>
@@ -185,6 +190,29 @@
                 <groupId>io.micrometer</groupId>
                 <artifactId>micrometer-registry-prometheus</artifactId>
                 <version>${micrometer-registry-prometheus.version}</version>
+            </dependency>
+            <!-- Google API Client -->
+            <dependency>
+                <groupId>com.google.api-client</groupId>
+                <artifactId>google-api-client</artifactId>
+                <version>${google-api-client.version}</version>
+            </dependency>
+            <!-- Google OAuth Client -->
+<!--            <dependency>-->
+<!--                <groupId>com.google.oauth-client</groupId>-->
+<!--                <artifactId>google-oauth-client-jetty</artifactId>-->
+<!--                <version>${google-api-client.version}</version>-->
+<!--            </dependency>-->
+            <!-- Google Drive API -->
+            <dependency>
+                <groupId>com.google.apis</groupId>
+                <artifactId>google-api-services-drive</artifactId>
+                <version>${google-api-services-drive.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.http-client</groupId>
+                <artifactId>google-http-client-jackson2</artifactId>
+                <version>${google-http-client-jackson2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
