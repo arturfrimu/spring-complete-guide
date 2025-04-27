@@ -14,6 +14,8 @@
     <modules>
         <module>cacheable-default</module>
         <module>distributed-cache-redis</module>
+        <module>hibernate-cache-l1</module>
+        <module>hibernate-cache-l2</module>
     </modules>
 
     <parent>

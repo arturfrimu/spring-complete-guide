@@ -1,0 +1,31 @@
+server:
+  port: 8789
+spring:
+  application:
+    name: hibernate-cache
+  cache:
+    type: jcache
+    jcache:
+      # tell Spring where to find your ehcache.xml
+      config: classpath:ehcache.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5441/hibernate-cache-l2
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      cache:
+        use_second_level_cache: true    # enable L2
+        use_query_cache: true          # if you want query caching too
+        region:
+          factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+      ddl-auto: update
+    show-sql: true
+    properties:
+      # point Hibernate’s JCache integration at Ehcache
+      hibernate.javax.cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
+      hibernate.javax.cache.uri: classpath:ehcache.xml
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
