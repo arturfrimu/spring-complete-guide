@@ -1,7 +1,7 @@
 package com.arturfrimu.graphql.resolver;
 
-import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -37,20 +37,20 @@ public class PostResolver {
 
         @Override
         @GraphQLQuery(name = "id", description = "The post's unique identifier")
-            public String id() {
-                return id;
-            }
-
-            @Override
-            @GraphQLQuery(name = "title", description = "The title of the post")
-            public String title() {
-                return title;
-            }
-
-            @Override
-            @GraphQLQuery(name = "content", description = "The content of the post")
-            public String content() {
-                return content;
-            }
+        public String id() {
+            return id;
         }
+
+        @Override
+        @GraphQLQuery(name = "title", description = "The title of the post")
+        public String title() {
+            return title;
+        }
+
+        @Override
+        @GraphQLQuery(name = "content", description = "The content of the post")
+        public String content() {
+            return content;
+        }
+    }
 }

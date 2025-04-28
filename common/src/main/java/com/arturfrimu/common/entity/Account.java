@@ -2,34 +2,23 @@ package com.arturfrimu.common.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Objects;
+import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "ACCOUNT")
+@Table(name = "account")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
-
+    @Column(name = "account_name", nullable = false)
     private String accountName;
-
-    public Account(String accountName) {
-        this.accountName = Objects.requireNonNull(accountName, "Account name can't be null");
-    }
-
-    public Account(long id, String accountName) {
-        this.id = Objects.requireNonNull(id, "Id can't be null");
-        this.accountName = Objects.requireNonNull(accountName, "Account name can't be null");
-    }
 }
