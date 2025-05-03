@@ -29,6 +29,7 @@
         <module>graphql</module>
         <module>google-integrations</module>
         <module>starters</module>
+        <module>rate-limiters</module>
     </modules>
 
     <properties>
