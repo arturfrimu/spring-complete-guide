@@ -1,7 +1,7 @@
 package com.arturfrimu.common.repository;
 
-import com.arturfrimu.common.annotation.LogTime;
 import com.arturfrimu.common.entity.Account;
+import com.arturfrimu.logtime.annotation.LogTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

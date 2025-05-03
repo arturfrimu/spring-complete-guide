@@ -1,4 +1,4 @@
-package com.arturfrimu.common.annotation;
+package com.arturfrimu.logtime.annotation;
 
 import java.lang.annotation.*;
 

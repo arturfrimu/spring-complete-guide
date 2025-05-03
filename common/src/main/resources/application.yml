@@ -16,3 +16,7 @@ spring:
       hibernate:
         format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logtime:
+  aspect:
+    enabled: true

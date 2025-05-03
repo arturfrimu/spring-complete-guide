@@ -28,6 +28,7 @@
         <module>web-sockets</module>
         <module>graphql</module>
         <module>google-integrations</module>
+        <module>starters</module>
     </modules>
 
     <properties>
@@ -102,11 +103,6 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
-                <version>${spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
                 <version>${spring-boot-starter.version}</version>
             </dependency>
             <dependency>
@@ -189,6 +185,11 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${liquibase.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.arturfrimu</groupId>
+                <artifactId>logtime-spring-boot-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

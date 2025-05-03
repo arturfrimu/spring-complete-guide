@@ -1,0 +1,3 @@
+# Activare auto-configuration la g?sirea starter-ului pe classpath
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.arturfrimu.logtime.autoconfigure.LogTimeAutoConfiguration
