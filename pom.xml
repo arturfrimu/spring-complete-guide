@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arturfrimu.spring</groupId>
-    <artifactId>spring-complete-guide</artifactId>
+    <artifactId>programming-complete-guide</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>spring-complete-guide</name>
+    <name>programming-complete-guide</name>
 
     <packaging>pom</packaging>
 
