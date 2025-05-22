@@ -1,6 +1,6 @@
 package com.arturfrimu.nomenclatures.third.dto;
 
-import com.arturfrimu.nomenclatures.third.types.NomenclatureDto;
+import com.arturfrimu.nomenclatures.third.types.NomenclatureView;
 import com.arturfrimu.nomenclatures.third.types.NomenclatureType;
 import lombok.*;
 
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class ArticleView implements NomenclatureDto {
+public class ArticleView implements NomenclatureView {
     private Long id;
     private String title;
 

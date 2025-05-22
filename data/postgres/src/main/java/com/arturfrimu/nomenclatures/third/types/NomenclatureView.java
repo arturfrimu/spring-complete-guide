@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = UserView.class, name = "USERS"),
         @JsonSubTypes.Type(value = ArticleView.class, name = "ARTICLES"),
 })
-public interface NomenclatureDto {
+public interface NomenclatureView {
 
     NomenclatureType getType();
 }
