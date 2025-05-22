@@ -1,0 +1,21 @@
+### Send POST request with json body
+POST http://localhost:8776/api/nomenclatoare
+Content-Type: application/json
+
+{
+  "tableName": "AUTHORS",
+  "fields": ["NAME"]
+}
+
+
+### Send POST request with json body
+POST http://localhost:8776/api/nomenclatoare
+Content-Type: application/json
+
+{
+  "tableName": "BOOKS",
+  "fields": ["TITLE", "ISBN"]
+}
+
+### fetch
+GET http://localhost:8776/bugnom-nomenclature-types

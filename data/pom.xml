@@ -22,5 +22,6 @@
         <module>elastic-search</module>
         <module>hibernate</module>
         <module>normalization</module>
+        <module>postgres</module>
     </modules>
 </project>
