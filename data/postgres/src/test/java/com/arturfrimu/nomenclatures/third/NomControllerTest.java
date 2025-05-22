@@ -57,7 +57,8 @@ class NomControllerTest {
             ResponseEntity<UserView> response = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -71,7 +72,8 @@ class NomControllerTest {
             ResponseEntity<ArticleView> response = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "title")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -87,13 +89,15 @@ class NomControllerTest {
             ResponseEntity<UserView> createdUser = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<UserView> updatedUser = testRestTemplate.exchange(
                     RequestEntity.put(URI.create(buildPath(UPDATE)))
                             .body(new UserView(createdUser.getBody().getId(), "Andrew", "Black")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(updatedUser.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -107,13 +111,15 @@ class NomControllerTest {
             ResponseEntity<ArticleView> createdArticle = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "title")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<ArticleView> updatedArticle = testRestTemplate.exchange(
                     RequestEntity.put(URI.create(buildPath(UPDATE)))
                             .body(new ArticleView(createdArticle.getBody().getId(), "newTitle")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(updatedArticle.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -129,7 +135,8 @@ class NomControllerTest {
             ResponseEntity<UserView> createdUser = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<UserView> user = testRestTemplate.exchange(
@@ -137,7 +144,8 @@ class NomControllerTest {
                                     .fromUriString(buildPath(FIND_BY_ID.formatted(createdUser.getBody().getId())))
                                     .queryParam("type", "USERS").build().toUri())
                             .build(),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(user.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -151,14 +159,16 @@ class NomControllerTest {
             ResponseEntity<ArticleView> createdArticle = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "title")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<ArticleView> article = testRestTemplate.exchange(
                     RequestEntity.get(UriComponentsBuilder
                             .fromUriString(buildPath(FIND_BY_ID.formatted(createdArticle.getBody().getId())))
                             .queryParam("type", "ARTICLES").build().toUri()).build(),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(article.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -174,21 +184,23 @@ class NomControllerTest {
             testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Andrew", "Black")),
-                    UserView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<PageResponse<UserView>> john = testRestTemplate.exchange(
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "USERS")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "0")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "0")
                                     .build().toUri())
                             .build(),
                     new ParameterizedTypeReference<>() {
@@ -207,8 +219,8 @@ class NomControllerTest {
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "USERS")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "1")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "1")
                                     .build().toUri())
                             .build(),
                     new ParameterizedTypeReference<>() {
@@ -225,25 +237,70 @@ class NomControllerTest {
         }
 
         @Test
+        void findUserPageSortedByNameDescAndSurnameAsc() {
+            testRestTemplate.exchange(
+                    RequestEntity.post(URI.create(buildPath(CREATE)))
+                            .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Ball", "Fran")),
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            testRestTemplate.exchange(
+                    RequestEntity.post(URI.create(buildPath(CREATE)))
+                            .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Albert", "Colt")),
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            testRestTemplate.exchange(
+                    RequestEntity.post(URI.create(buildPath(CREATE)))
+                            .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Albert", "Pick")),
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            ResponseEntity<PageResponse<UserView>> page = testRestTemplate.exchange(
+                    RequestEntity.get(UriComponentsBuilder
+                                    .fromUriString(buildPath(FIND_PAGE))
+                                    .queryParam("type", "USERS")
+                                    .queryParam("size", "3")
+                                    .queryParam("page", "0")
+                                    .queryParam("sort", "name,asc")
+                                    .queryParam("sort", "surname,desc")
+                                    .build().toUri())
+                            .build(),
+                    new ParameterizedTypeReference<>() {}
+            );
+
+            assertThat(page.getBody().content().get(0).getName()).isEqualTo("Albert");
+            assertThat(page.getBody().content().get(0).getSurname()).isEqualTo("Pick");
+
+            assertThat(page.getBody().content().get(1).getName()).isEqualTo("Albert");
+            assertThat(page.getBody().content().get(1).getSurname()).isEqualTo("Colt");
+
+            assertThat(page.getBody().content().get(2).getName()).isEqualTo("Ball");
+            assertThat(page.getBody().content().get(2).getSurname()).isEqualTo("Fran");
+        }
+
+        @Test
         void findArticlePage() {
             testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Title 1")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
                             .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "Title 2")),
-                    ArticleView.class
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             ResponseEntity<PageResponse<ArticleView>> title1 = testRestTemplate.exchange(
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "ARTICLES")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "0")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "0")
                                     .build().toUri())
                             .build(),
                     new ParameterizedTypeReference<>() {
@@ -261,8 +318,8 @@ class NomControllerTest {
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "ARTICLES")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "1")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "1")
                                     .build().toUri())
                             .build(),
                     new ParameterizedTypeReference<>() {
@@ -275,6 +332,45 @@ class NomControllerTest {
             assertThat(title2.getBody().totalElements()).isEqualTo(2);
             assertThat(title2.getBody().content().getFirst().getId()).isNotNull().isNotNegative();
             assertThat(title2.getBody().content().getFirst().getTitle()).isEqualTo("Title 2");
+        }
+
+        @Test
+        void findArticlePageSortedByTitleDesc() {
+            testRestTemplate.exchange(
+                    RequestEntity.post(URI.create(buildPath(CREATE)))
+                            .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "A")),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+
+            testRestTemplate.exchange(
+                    RequestEntity.post(URI.create(buildPath(CREATE)))
+                            .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "B")),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+
+            ResponseEntity<PageResponse<ArticleView>> articlePage = testRestTemplate.exchange(
+                    RequestEntity.get(UriComponentsBuilder
+                                    .fromUriString(buildPath(FIND_PAGE))
+                                    .queryParam("type", "ARTICLES")
+                                    .queryParam("size", "2")
+                                    .queryParam("page", "0")
+                                    .queryParam("sort", "title,desc")
+                                    .build().toUri())
+                            .build(),
+                    new ParameterizedTypeReference<>() {
+                    }
+            );
+
+            assertThat(articlePage.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(articlePage.getBody()).isNotNull();
+            assertThat(articlePage.getBody().content()).isNotNull().isNotEmpty();
+            assertThat(articlePage.getBody().totalElements()).isEqualTo(2);
+            assertThat(articlePage.getBody().content().getFirst().getId()).isNotNull().isNotNegative();
+
+            assertThat(articlePage.getBody().content().getFirst().getTitle()).isEqualTo("B");
+            assertThat(articlePage.getBody().content().getLast().getTitle()).isEqualTo("A");
         }
     }
 
@@ -386,8 +482,8 @@ class NomControllerTest {
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "USERS")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "0")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "0")
                                     .build().toUri())
                             .build(),
                     new ParameterizedTypeReference<>() {
@@ -433,11 +529,12 @@ class NomControllerTest {
                     RequestEntity.get(UriComponentsBuilder
                                     .fromUriString(buildPath(FIND_PAGE))
                                     .queryParam("type", "ARTICLES")
-                                    .queryParam("pageSize", "1")
-                                    .queryParam("pageNumber", "0")
+                                    .queryParam("size", "1")
+                                    .queryParam("page", "0")
                                     .build().toUri())
                             .build(),
-                    new ParameterizedTypeReference<>() {}
+                    new ParameterizedTypeReference<>() {
+                    }
             );
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

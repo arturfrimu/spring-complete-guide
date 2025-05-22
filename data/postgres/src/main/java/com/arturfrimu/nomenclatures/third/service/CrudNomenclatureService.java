@@ -10,7 +10,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,11 +71,11 @@ public class CrudNomenclatureService {
     }
 
     @Transactional(readOnly = true)
-    public <E extends NomenclatureEntity, D extends NomenclatureView> Page<D> findPage(NomenclatureType type, PageRequest pageRequest) {
+    public <E extends NomenclatureEntity, D extends NomenclatureView> Page<D> findPage(NomenclatureType type, Pageable pageable) {
         NomenclatureMapper<E, D> mapper = findMapper(type);
         NomenclatureRepository<E, Long> repo = findRepository(type);
 
-        Page<E> entitiesPage = repo.findAll(pageRequest);
+        Page<E> entitiesPage = repo.findAll(pageable);
 
         return entitiesPage.map(mapper::toDto);
     }
