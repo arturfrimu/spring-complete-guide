@@ -56,9 +56,8 @@ class NomControllerTest {
         void createUser() {
             ResponseEntity<UserView> response = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
-                            .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    new ParameterizedTypeReference<>() {
-                    }
+                            .body(new UserView(null, "John", "Doe")),
+                    new ParameterizedTypeReference<>() {}
             );
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -71,9 +70,8 @@ class NomControllerTest {
         void createArticle() {
             ResponseEntity<ArticleView> response = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
-                            .body(new ArticleView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "title")),
-                    new ParameterizedTypeReference<>() {
-                    }
+                            .body(new ArticleView(null, "title")),
+                    new ParameterizedTypeReference<>() {}
             );
 
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -88,16 +86,14 @@ class NomControllerTest {
         void updateUser() {
             ResponseEntity<UserView> createdUser = testRestTemplate.exchange(
                     RequestEntity.post(URI.create(buildPath(CREATE)))
-                            .body(new UserView(Long.parseLong(RandomStringUtils.randomNumeric(6)), "John", "Doe")),
-                    new ParameterizedTypeReference<>() {
-                    }
+                            .body(new UserView(null, "John", "Doe")),
+                    new ParameterizedTypeReference<>() {}
             );
 
             ResponseEntity<UserView> updatedUser = testRestTemplate.exchange(
                     RequestEntity.put(URI.create(buildPath(UPDATE)))
                             .body(new UserView(createdUser.getBody().getId(), "Andrew", "Black")),
-                    new ParameterizedTypeReference<>() {
-                    }
+                    new ParameterizedTypeReference<>() {}
             );
 
             assertThat(updatedUser.getStatusCode()).isEqualTo(HttpStatus.OK);

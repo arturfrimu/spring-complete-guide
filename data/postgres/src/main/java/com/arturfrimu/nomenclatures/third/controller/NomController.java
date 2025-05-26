@@ -2,7 +2,7 @@ package com.arturfrimu.nomenclatures.third.controller;
 
 import com.arturfrimu.nomenclatures.third.service.CrudNomenclatureService;
 import com.arturfrimu.nomenclatures.third.types.NomenclatureType;
-import com.arturfrimu.nomenclatures.third.types.NomenclatureView;
+import com.arturfrimu.nomenclatures.third.dto.NomenclatureView;
 import com.arturfrimu.nomenclatures.third.types.PageResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

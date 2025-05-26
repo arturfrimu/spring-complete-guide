@@ -1,6 +1,5 @@
 package com.arturfrimu.nomenclatures.third.entity;
 
-import com.arturfrimu.nomenclatures.third.types.NomenclatureEntity;
 import com.arturfrimu.nomenclatures.third.types.NomenclatureType;
 import jakarta.persistence.*;
 import lombok.*;

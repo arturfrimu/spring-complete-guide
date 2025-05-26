@@ -1,6 +1,5 @@
 package com.arturfrimu.nomenclatures.third.dto;
 
-import com.arturfrimu.nomenclatures.third.types.NomenclatureView;
 import com.arturfrimu.nomenclatures.third.types.NomenclatureType;
 import lombok.*;
 

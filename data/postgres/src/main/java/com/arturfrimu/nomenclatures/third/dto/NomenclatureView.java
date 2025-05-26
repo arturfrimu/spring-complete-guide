@@ -1,7 +1,6 @@
-package com.arturfrimu.nomenclatures.third.types;
+package com.arturfrimu.nomenclatures.third.dto;
 
-import com.arturfrimu.nomenclatures.third.dto.ArticleView;
-import com.arturfrimu.nomenclatures.third.dto.UserView;
+import com.arturfrimu.nomenclatures.third.types.INomenclatureType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -15,7 +14,4 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = UserView.class, name = "USERS"),
         @JsonSubTypes.Type(value = ArticleView.class, name = "ARTICLES"),
 })
-public interface NomenclatureView {
-
-    NomenclatureType getType();
-}
+public interface NomenclatureView extends INomenclatureType {}
