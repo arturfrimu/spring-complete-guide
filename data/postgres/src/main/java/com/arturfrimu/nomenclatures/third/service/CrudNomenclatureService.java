@@ -28,13 +28,11 @@ import java.util.stream.Collectors;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CrudNomenclatureService {
 
-    CrudNomenclatureMapperProvider mapperProvider;
-    CrudNomenclatureRepositoryProvider repositoryProvider;
+    CrudNomenclatorMapperProvider mapperProvider;
+    CrudNomenclatorRepositoryProvider repositoryProvider;
 
     @Transactional
     public <E extends NomenclatureEntity, D extends NomenclatureView> D create(D dto) {
-        checkType(dto, NomenclatureView.class);
-
         NomenclatureType type = dto.getType();
 
         NomenclatureMapper<E, D> mapper = mapperProvider.get(type);
@@ -47,12 +45,6 @@ public class CrudNomenclatureService {
         D response = mapper.toDto(savedEntity);
 
         return response;
-    }
-
-    private static <D> void checkType(D dto, Class<D> expectedType) {
-        if (!expectedType.isInstance(dto)) {
-            throw new IllegalArgumentException("DTO must be of type %s".formatted(expectedType.getName()));
-        }
     }
 
     @Transactional
@@ -78,7 +70,9 @@ public class CrudNomenclatureService {
         NomenclatureMapper<E, D> mapper = mapperProvider.get(type);
         NomenclatureRepository<E, Long> repo = repositoryProvider.get(type);
 
-        D response = repo.findById(id).map(mapper::toDto).orElseThrow(() -> new EntityNotFoundException("Nomenclature de tip %s cu id-ul %d nu a fost găsită".formatted(type, id)));
+        D response = repo.findById(id)
+                .map(mapper::toDto)
+                .orElseThrow(() -> new EntityNotFoundException("Nomenclature de tip %s cu id-ul %d nu a fost găsită".formatted(type, id)));
 
         return response;
     }
@@ -146,7 +140,7 @@ public class CrudNomenclatureService {
     @Component
     @RequiredArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-    static class CrudNomenclatureMapperProvider {
+    static class CrudNomenclatorMapperProvider {
 
         List<NomenclatureMapper<? extends NomenclatureEntity, ? extends NomenclatureView>> mappers;
 
@@ -175,7 +169,7 @@ public class CrudNomenclatureService {
     @Component
     @RequiredArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-    static class CrudNomenclatureRepositoryProvider {
+    static class CrudNomenclatorRepositoryProvider {
 
         List<NomenclatureRepository<? extends NomenclatureEntity, Long>> repositories;
 
