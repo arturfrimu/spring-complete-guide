@@ -1,0 +1,6 @@
+- ALL 
+- PERSIST 
+- MERGE 
+- REMOVE 
+- REFRESH 
+- DETACH
