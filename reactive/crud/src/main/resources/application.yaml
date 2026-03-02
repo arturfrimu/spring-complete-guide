@@ -8,8 +8,12 @@ spring:
       url: r2dbc:postgresql://localhost:5432/crud_reactive
       username: postgres
       password: postgres
-    flyway:
+
+    datasource:
       url: jdbc:postgresql://localhost:5432/crud_reactive
-      user: postgres
+      username: postgres
       password: postgres
+      driver-class-name: org.postgresql.Driver
+
+    flyway:
       locations: classpath:db/migration

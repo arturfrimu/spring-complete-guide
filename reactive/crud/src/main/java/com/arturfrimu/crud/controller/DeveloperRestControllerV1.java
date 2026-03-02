@@ -5,10 +5,13 @@ import com.arturfrimu.crud.service.DeveloperService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/developers")
@@ -32,7 +35,11 @@ public class DeveloperRestControllerV1 {
     @GetMapping
     public Flux<DeveloperDto> findAll() {
         return developerService.findAll()
-                .flatMap(entity -> Mono.just(DeveloperDto.fromEntity(entity)));
+                .flatMap(entity -> {
+                    DeveloperDto data = DeveloperDto.fromEntity(entity);
+                    log.info("" + data);
+                    return Mono.just(data);
+                });
     }
 
     @GetMapping("/speciality/{speciality}")

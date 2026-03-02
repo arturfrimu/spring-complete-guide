@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developers API</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #18181c;
+      --border: #2a2a32;
+      --text: #e8e8ed;
+      --muted: #8888a0;
+      --accent: #7c6ef6;
+      --accent-hover: #9588f7;
+      --success: #4ade80;
+      --danger: #f87171;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Outfit", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 1.75rem;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .page-header {
+      flex-shrink: 0;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .page-header h1 {
+      margin: 0;
+    }
+
+    .page-header .subtitle {
+      margin: 0;
+    }
+
+    .page-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+
+    .sidebar {
+      flex-shrink: 0;
+      width: 340px;
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 1rem;
+    }
+
+    .main-find-all {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .main-find-all__toolbar {
+      flex-shrink: 0;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .main-find-all__toolbar .reactive-hint {
+      margin: 0;
+    }
+
+    .reactive-list-fullpage {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      min-height: 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0 0 1rem 0;
+      color: var(--accent);
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-row:last-of-type {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    input, select {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.85rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      width: 100%;
+      min-width: 0;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .field {
+      flex: 1 1 140px;
+      min-width: 0;
+    }
+
+    .field--id {
+      flex: 0 0 80px;
+    }
+
+    button {
+      font-family: "Outfit", sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.6rem 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      transition: background 0.15s;
+    }
+
+    button:hover {
+      background: var(--accent-hover);
+    }
+
+    button.danger {
+      background: var(--danger);
+    }
+
+    button.danger:hover {
+      background: #ef4444;
+    }
+
+    .inline-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .inline-actions .field {
+      flex: 1 1 100px;
+    }
+
+    .output {
+      margin-top: 1.5rem;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      max-height: 320px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output.empty {
+      color: var(--muted);
+    }
+
+    .output.error {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .output.success {
+      border-color: var(--success);
+    }
+
+    /* Reactive findAll: full-page streamed list */
+    .reactive-list-fullpage {
+      scroll-behavior: smooth;
+    }
+
+    .reactive-list {
+      min-height: 100%;
+    }
+
+    .reactive-list.empty {
+      color: var(--muted);
+      font-size: 0.9rem;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .reactive-list__count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .developer-row {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr auto;
+      gap: 0.75rem 1rem;
+      align-items: center;
+      padding: 0.6rem 0.75rem;
+      margin-bottom: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      animation: developerRowIn 0.35s ease-out;
+    }
+
+    .developer-row:last-child {
+      margin-bottom: 0;
+    }
+
+    @keyframes developerRowIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .developer-row__avatar {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .developer-row__info {
+      min-width: 0;
+    }
+
+    .developer-row__name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .developer-row__meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .developer-row__badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      background: rgba(124, 110, 246, 0.2);
+      color: var(--accent);
+    }
+
+    .message {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .message.error {
+      color: var(--danger);
+    }
+
+    .message.success {
+      color: var(--success);
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1>Developers API</h1>
+    <p class="subtitle">CRUD operations (localhost:8787)</p>
+  </header>
+
+  <div class="page-body">
+    <aside class="sidebar">
+      <div class="grid">
+        <div class="card">
+          <h2>Create developer</h2>
+      <form id="form-create">
+        <div class="form-row">
+          <div class="field">
+            <label>First name</label>
+            <input type="text" name="firstName" value="John" required />
+          </div>
+          <div class="field">
+            <label>Last name</label>
+            <input type="text" name="lastName" value="Week" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" value="john.week@mail.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Speciality</label>
+            <input type="text" name="speciality" value="JavaScript Developer" required />
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select name="status">
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <button type="submit">Create</button>
+          <span id="msg-create" class="message"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Update developer</h2>
+      <form id="form-update">
+        <div class="form-row">
+          <div class="field field--id">
+            <label>ID</label>
+            <input type="number" name="id" min="1" value="1" required />
+          </div>
+          <div class="field">
+            <label>First name</label>
+            <input type="text" name="firstName" value="John" required />
+          </div>
+          <div class="field">
+            <label>Last name</label>
+            <input type="text" name="lastName" value="Snow" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" value="john.snow@mail.com" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>Speciality</label>
+            <input type="text" name="speciality" value="Java Developer" required />
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select name="status">
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="INACTIVE">INACTIVE</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <button type="submit">Update</button>
+          <span id="msg-update" class="message"></span>
+        </div>
+      </form>
+    </div>
+
+        <div class="card">
+          <h2>Find developer by ID</h2>
+      <div class="form-row inline-actions">
+        <div class="field">
+          <label>ID</label>
+          <input type="number" id="input-find-id" min="1" value="1" />
+        </div>
+        <button type="button" id="btn-find-id">Find by ID</button>
+        <span id="msg-find-id" class="message"></span>
+      </div>
+      <div id="output-find-id" class="output empty">Result will appear here.</div>
+    </div>
+
+    <div class="card">
+      <h2>Delete developer (soft)</h2>
+      <div class="form-row inline-actions">
+        <div class="field">
+          <label>ID</label>
+          <input type="number" id="input-delete-soft" min="1" value="2" />
+        </div>
+        <button type="button" id="btn-delete-soft">Soft delete</button>
+        <span id="msg-delete-soft" class="message"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Delete developer (hard)</h2>
+      <div class="form-row inline-actions">
+        <div class="field">
+          <label>ID</label>
+          <input type="number" id="input-delete-hard" min="1" value="1" />
+        </div>
+        <button type="button" id="btn-delete-hard" class="danger">Hard delete</button>
+        <span id="msg-delete-hard" class="message"></span>
+      </div>
+    </div>
+      </div>
+    </aside>
+
+    <main class="main-find-all">
+      <div class="main-find-all__toolbar">
+        <button type="button" id="btn-find-all">Find all</button>
+        <span id="msg-find-all" class="message"></span>
+        <p class="reactive-hint" style="font-size:0.8rem;color:var(--muted);margin:0;">Elements appear one by one, 1s delay — scroll follows each new item.</p>
+      </div>
+      <div id="reactive-list-scroll" class="reactive-list-fullpage">
+        <div id="output-find-all" class="reactive-list empty">Click «Find all» to load developers. They will appear line by line; page scrolls automatically.</div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function showMessage(elId, text, type) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.textContent = text;
+      el.className = "message " + (type || "");
+    }
+
+    function showOutput(elId, data, isError) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      el.textContent = data == null ? "" : JSON.stringify(data, null, 2);
+      el.className = "output " + (data == null ? "empty" : isError ? "error" : "success");
+    }
+
+    document.getElementById("form-create").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const payload = {
+        firstName: fd.get("firstName"),
+        lastName: fd.get("lastName"),
+        email: fd.get("email"),
+        speciality: fd.get("speciality"),
+        status: fd.get("status"),
+      };
+      try {
+        await createDeveloper(payload);
+        showMessage("msg-create", "Created.", "success");
+      } catch (err) {
+        showMessage("msg-create", err.message, "error");
+      }
+    });
+
+    document.getElementById("form-update").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const payload = {
+        id: parseInt(fd.get("id"), 10),
+        firstName: fd.get("firstName"),
+        lastName: fd.get("lastName"),
+        email: fd.get("email"),
+        speciality: fd.get("speciality"),
+        status: fd.get("status"),
+      };
+      try {
+        const result = await updateDeveloper(payload);
+        showMessage("msg-update", "Updated.", "success");
+        showOutput("output-find-id", result);
+      } catch (err) {
+        showMessage("msg-update", err.message, "error");
+      }
+    });
+
+    function renderDeveloperRow(d) {
+      const initial = (d.firstName || "?").charAt(0) + (d.lastName || "?").charAt(0);
+      const row = document.createElement("div");
+      row.className = "developer-row";
+      row.innerHTML =
+        '<span class="developer-row__avatar">' +
+        (initial.toUpperCase()) +
+        "</span>" +
+        '<div class="developer-row__info">' +
+        '<div class="developer-row__name">' +
+        (d.firstName || "") +
+        " " +
+        (d.lastName || "") +
+        "</div>" +
+        '<div class="developer-row__meta">' +
+        (d.email || "") +
+        "</div>" +
+        "</div>" +
+        '<span class="developer-row__badge">' +
+        (d.speciality || "—") +
+        "</span>";
+      return row;
+    }
+
+    document.getElementById("btn-find-all").addEventListener("click", async () => {
+      const container = document.getElementById("output-find-all");
+      const scrollContainer = document.getElementById("reactive-list-scroll");
+      showMessage("msg-find-all", "");
+      container.className = "reactive-list";
+      container.innerHTML = '<span style="color:var(--muted)">Loading…</span>';
+      if (scrollContainer) scrollContainer.scrollTop = 0;
+      try {
+        const list = await findAllDevelopers();
+        const items = Array.isArray(list) ? list : [];
+        container.innerHTML = "";
+        if (items.length === 0) {
+          container.classList.add("empty");
+          container.textContent = "No developers found.";
+          return;
+        }
+        container.classList.remove("empty");
+        const countEl = document.createElement("div");
+        countEl.className = "reactive-list__count";
+        countEl.textContent = "Showing " + items.length + " developer(s) — streaming in:";
+        container.appendChild(countEl);
+        for (let i = 0; i < items.length; i++) {
+          await new Promise((r) => setTimeout(r, 1000));
+          const row = renderDeveloperRow(items[i]);
+          container.appendChild(row);
+          if (scrollContainer) row.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+        showMessage("msg-find-all", "Done. " + items.length + " loaded.", "success");
+      } catch (err) {
+        showMessage("msg-find-all", err.message, "error");
+        container.classList.add("empty");
+        container.textContent = err.message;
+      }
+    });
+
+    document.getElementById("btn-find-id").addEventListener("click", async () => {
+      const id = document.getElementById("input-find-id").value;
+      showMessage("msg-find-id", "");
+      try {
+        const result = await findDeveloperById(id);
+        showOutput("output-find-id", result, false);
+      } catch (err) {
+        showMessage("msg-find-id", err.message, "error");
+        showOutput("output-find-id", err.message, true);
+      }
+    });
+
+    document.getElementById("btn-delete-soft").addEventListener("click", async () => {
+      const id = document.getElementById("input-delete-soft").value;
+      showMessage("msg-delete-soft", "");
+      try {
+        await deleteDeveloperSoft(id);
+        showMessage("msg-delete-soft", "Soft deleted.", "success");
+      } catch (err) {
+        showMessage("msg-delete-soft", err.message, "error");
+      }
+    });
+
+    document.getElementById("btn-delete-hard").addEventListener("click", async () => {
+      const id = document.getElementById("input-delete-hard").value;
+      showMessage("msg-delete-hard", "");
+      try {
+        await deleteDeveloperHard(id);
+        showMessage("msg-delete-hard", "Hard deleted.", "success");
+      } catch (err) {
+        showMessage("msg-delete-hard", err.message, "error");
+      }
+    });
+  </script>
+</body>
+</html>
