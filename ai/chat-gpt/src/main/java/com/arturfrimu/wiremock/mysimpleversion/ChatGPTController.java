@@ -1,4 +1,4 @@
-package com.arturfrimu.chatgpt.mysimpleversion;
+package com.arturfrimu.wiremock.mysimpleversion;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

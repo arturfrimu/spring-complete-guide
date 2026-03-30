@@ -1,4 +1,4 @@
-package com.arturfrimu.chatgpt.simple;
+package com.arturfrimu.wiremock.simple;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.client.methods.CloseableHttpResponse;

@@ -1,4 +1,4 @@
-package com.arturfrimu.chatgpt.mysimpleversion;
+package com.arturfrimu.wiremock.mysimpleversion;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;

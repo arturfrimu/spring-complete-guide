@@ -1,4 +1,4 @@
-package com.arturfrimu.chatgpt.simple;
+package com.arturfrimu.wiremock.simple;
 
 import lombok.Data;
 

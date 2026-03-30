@@ -12,7 +12,7 @@
         <testcontainers.version>1.19.7</testcontainers.version>
         <r2dbc-postgresql.version>1.0.4.RELEASE</r2dbc-postgresql.version>
         <postgresql.version>42.7.3</postgresql.version>
-        <flyway-core.version>9.22.3</flyway-core.version>
+        <flyway-core.version>12.1.0</flyway-core.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
     </properties>
 

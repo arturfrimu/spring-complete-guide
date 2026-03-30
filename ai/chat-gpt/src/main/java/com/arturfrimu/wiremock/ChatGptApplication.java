@@ -1,4 +1,4 @@
-package com.arturfrimu.chatgpt;
+package com.arturfrimu.wiremock;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
